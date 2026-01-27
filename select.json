@@ -1,0 +1,14 @@
+{
+  "name": "Portfolio",
+  "version": "1.0.0",
+  "category": "education",
+  "tagline": "Portfolio",
+  "description": "Portfolio",
+  "icon": "🚀",
+  "platforms": [
+    "web"
+  ],
+  "badges": [
+    "opensource"
+  ]
+}
