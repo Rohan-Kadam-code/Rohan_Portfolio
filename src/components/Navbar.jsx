@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
 
+const sections = [
+    { id: 'hero', label: 'Start' },
+    { id: 'about', label: 'Profile' },
+    { id: 'journey', label: 'Circuit' },
+    { id: 'toolkit', label: 'Toolkit' },
+    { id: 'projects', label: 'Builds' },
+    { id: 'contact', label: 'Connect' },
+];
+
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState('hero');
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
+
+            // Determine active section
+            let current = 'hero';
+            for (const section of sections) {
+                const el = document.getElementById(section.id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight / 3) {
+                        current = section.id;
+                    }
+                }
+            }
+            setActiveSection(current);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -45,13 +68,26 @@ const Navbar = () => {
             display: 'flex',
             gap: '40px',
         },
-        link: {
+        link: (isActive) => ({
             fontFamily: 'var(--font-mono)',
             fontSize: '0.9rem',
             textTransform: 'uppercase',
             letterSpacing: '1px',
-            color: 'var(--color-text)',
+            color: isActive ? '#fff' : 'var(--color-text)',
             position: 'relative',
+            transition: 'color 0.3s ease',
+            cursor: 'pointer',
+        }),
+        activeIndicator: {
+            position: 'absolute',
+            bottom: '-4px',
+            left: '0',
+            width: '100%',
+            height: '2px',
+            background: 'var(--color-primary)',
+            boxShadow: '0 0 8px var(--color-primary)',
+            borderRadius: '1px',
+            transition: 'all 0.3s ease',
         },
     };
 
@@ -61,12 +97,14 @@ const Navbar = () => {
                 <span style={styles.logoAccent}>//</span> ROHAN KADAM
             </div>
             <ul style={styles.links} className="nav-links">
-                <li><a href="#hero" style={styles.link}>Start</a></li>
-                <li><a href="#about" style={styles.link}>Diagnostics</a></li>
-                <li><a href="#journey" style={styles.link}>Circuit</a></li>
-                <li><a href="#expertise" style={styles.link}>Specs</a></li>
-                <li><a href="#projects" style={styles.link}>Builds</a></li>
-                <li><a href="#contact" style={styles.link}>Connect</a></li>
+                {sections.map(({ id, label }) => (
+                    <li key={id}>
+                        <a href={`#${id}`} style={styles.link(activeSection === id)}>
+                            {label}
+                            {activeSection === id && <span style={styles.activeIndicator} />}
+                        </a>
+                    </li>
+                ))}
             </ul>
         </nav>
     );

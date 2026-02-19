@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import RevealOnScroll from './RevealOnScroll';
+import GlitchText from './GlitchText';
 
 const Journey = () => {
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -10,49 +11,55 @@ const Journey = () => {
         {
             id: 1,
             name: "Veloce Racing",
-            role: "Brake System Design",
-            year: "Lap 1",
+            role: "Brake Systems Design",
+            year: "Test Lap",
             align: "left",
             details: [
-                "Designed hydraulic brake circuits for Formula Student race car.",
-                "Performed thermal analysis (ANSYS) on brake rotors to minimize fade.",
-                "Optimized caliper stiffness-to-weight ratio using topology optimization."
+                "Designed hydraulic brake control circuits with sensor integration for Formula Student race car.",
+                "Designed and optimized brake balance bar assembly based on real-time data acquired during track testing.",
+                "Performed FEA thermal analysis (ANSYS) on brake rotors — first exposure to simulation-driven design."
             ]
         },
         {
             id: 2,
             name: "TATA Technologies",
-            role: "Forklift Powertrain Design",
-            year: "Lap 2",
+            role: "Powertrain Design Lead — 3T Forklifts",
+            year: "Lap 1 • 2019–2023",
             align: "right",
             details: [
-                "Integrated Tier-4 Final diesel engines into 3-5 ton forklift chassis.",
-                "Designed transmission coupling systems and mounting brackets.",
-                "Conducted NVH analysis to reduce powertrain vibration transmission."
+                "Led complete powertrain design for 3D/E forklifts, simulating 50+ engine-transmission combinations for optimal performance.",
+                "Conducted comprehensive benchmarking and ROI analysis to propose cost-effective, high-performance powertrain architectures.",
+                "Validated systems on-site and prepared detailed engineering documentation, calculations, and interface specifications.",
+                "Collaborated on embedded integration: fleet management strategy, IoT connectivity modules, and sensor selection."
             ]
         },
         {
             id: 3,
             name: "Mahindra & Mahindra",
-            role: "Powertrain Cooling",
-            year: "Lap 3",
+            role: "Thermal Systems Architecture",
+            year: "Lap 2 • 2023–2024",
             align: "left",
             details: [
-                "Led 1D/3D CFD simulations for radiator and intercooler sizing.",
-                "Optimized coolant flow path to ensure uniform cylinder head cooling.",
-                "Designed fan shrouds to maximize airflow efficiency under high-load conditions."
+                "Owned end-to-end thermal management architecture: 1D/3D CFD for radiator, intercooler, and EGR cooler sizing; validated in wind tunnel with hands-on instrumentation and sensor rigs.",
+                "Conducted data acquisition and post-processing analysis; drove design improvements through iterative test-analyze-fix cycles with full documented signoffs.",
+                "Designed accelerator pedal module from concept to tooling completion — including technology selection, mechanical packaging design, and ASIL C functional safety signoffs.",
+                "Followed OEM product development practices: PPAP, DFMEA, quality gateway reviews, and warranty signoff processes aligned with Mahindra's APQP framework.",
+                "Defined coolant circuit topology and fan control architecture with CAN-based speed modulation under varying duty cycles."
             ]
         },
         {
             id: 4,
             name: "Cognizant (Stellantis)",
-            role: "Electrified Powertrain Systems",
-            year: "Lap 4 (Current Leader)",
+            role: "Feature Owner — Range & Powerflow Systems",
+            year: "Lap 3 • 2024–Present",
             align: "right",
             details: [
-                "Developing integration strategies for High Voltage (HV) battery packs.",
-                "Designing e-motor mounting systems for next-gen EV platforms.",
-                "Leading thermal management system design for power electronics and battery."
+                "Feature owner for Range Estimation and Powerflow management — end-to-end ownership from requirements through validation.",
+                "Authoring, reviewing, and releasing system requirements using DOORS Next Gen; maintaining full traceability from stakeholder needs to system specs.",
+                "Led a process improvement initiative to develop an internal DOORS NXG alternative, streamlining requirements management workflows across teams.",
+                "Performing requirements validation and calibration through ETAS INCA — verifying system behavior against specification on HIL and vehicle.",
+                "Creating and maintaining system architecture models in IBM Rhapsody using SysML — defining block definitions, activity diagrams, and interface contracts.",
+                "Driving cross-functional issue resolution across powertrain controls, calibration, and integration teams for production release milestones."
             ]
         }
     ];
@@ -64,13 +71,11 @@ const Journey = () => {
                 const height = containerRef.current.offsetHeight;
                 const windowHeight = window.innerHeight;
 
-                // Calculate progress based on container position relative to viewport center
                 let scrollPercent = (windowHeight / 2 - rect.top) / height;
                 let progress = Math.max(0, Math.min(0.98, scrollPercent));
 
                 setScrollProgress(progress * 100);
 
-                // Continuous active zones
                 let foundActive = null;
                 if (progress < 0.22) foundActive = 1;
                 else if (progress >= 0.22 && progress < 0.47) foundActive = 2;
@@ -96,8 +101,8 @@ const Journey = () => {
             position: 'relative',
             maxWidth: '1200px',
             margin: '0 auto',
-            minHeight: '2200px', // Increased height
-            padding: '100px 0 400px 0' // Much larger bottom padding to accommodate last item expansion
+            minHeight: '2800px',
+            padding: '100px 0 600px 0'
         },
         centerLine: {
             position: 'absolute',
@@ -137,12 +142,12 @@ const Journey = () => {
         },
         stopNode: (align, index) => ({
             position: 'absolute',
-            top: `${10 + index * 25}%`, // 10%, 35%, 60%, 85%
+            top: `${8 + index * 22}%`,
             width: '50%',
             left: align === 'right' ? '50%' : '0',
             display: 'flex',
             justifyContent: align === 'right' ? 'flex-start' : 'flex-end',
-            padding: align === 'right' ? '0 0 0 80px' : '0 80px 0 0', // Increased padding to 80px to clear the car
+            padding: align === 'right' ? '0 0 0 80px' : '0 80px 0 0',
             boxSizing: 'border-box',
             zIndex: 3,
         }),
@@ -159,14 +164,12 @@ const Journey = () => {
             maxWidth: isActive ? '500px' : '350px',
             width: '100%',
             transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            // Move further outward when active
             transform: isActive ? (align === 'left' ? 'translateX(-20px) scale(1.05)' : 'translateX(20px) scale(1.05)') : 'translateX(0) scale(1)',
             opacity: isActive ? 1 : 0.7
         }),
         markerLine: (align, isActive) => ({
             position: 'absolute',
             top: '50%',
-            // Line extends from the side facing the track
             [align === 'left' ? 'right' : 'left']: isActive ? '-90px' : '-80px',
             width: isActive ? '90px' : '80px',
             height: '2px',
@@ -206,10 +209,11 @@ const Journey = () => {
         },
         detailItem: {
             color: '#bbb',
-            fontSize: '0.9rem',
-            marginBottom: '8px',
+            fontSize: '0.82rem',
+            marginBottom: '6px',
             display: 'flex',
-            gap: '10px'
+            gap: '8px',
+            lineHeight: 1.35,
         }
     };
 
@@ -217,7 +221,7 @@ const Journey = () => {
         <section id="journey" style={styles.section}>
             <div className="container" ref={containerRef}>
                 <RevealOnScroll>
-                    <h2 className="section-title">CAREER CIRCUIT <span style={{ fontSize: '0.5em', color: 'var(--color-text-muted)' }}>// PIT STOPS</span></h2>
+                    <h2 className="section-title"><GlitchText text="CAREER CIRCUIT" /> <span style={{ fontSize: '0.5em', color: 'var(--color-text-muted)' }}>// PIT STOPS</span></h2>
                 </RevealOnScroll>
 
                 <div style={styles.trackContainer}>
@@ -244,7 +248,7 @@ const Journey = () => {
 
                             {/* Main Body */}
                             <path d="M30 10 Q 38 30 40 50 V 95 H 20 V 50 Q 22 30 30 10 Z" fill="#cc0000" />
-                            <path d="M30 10 L 30 95" stroke="#aa0000" strokeWidth="1" /> {/* Center detail */}
+                            <path d="M30 10 L 30 95" stroke="#aa0000" strokeWidth="1" />
 
                             {/* Sidepods */}
                             <path d="M15 55 Q 10 60 10 90 H 20 V 55 Z" fill="#cc0000" />
@@ -252,7 +256,7 @@ const Journey = () => {
 
                             {/* Cockpit */}
                             <ellipse cx="30" cy="60" rx="5" ry="10" fill="#222" />
-                            <circle cx="30" cy="58" r="3.5" fill="#ffcc00" /> {/* Helmet - Yellow like Ferrari ref */}
+                            <circle cx="30" cy="58" r="3.5" fill="#ffcc00" />
 
                             {/* Front Suspension */}
                             <line x1="25" y1="30" x2="10" y2="30" stroke="#333" strokeWidth="3" />
