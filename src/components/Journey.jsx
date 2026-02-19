@@ -6,6 +6,7 @@ const Journey = () => {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [activeStop, setActiveStop] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [spin, setSpin] = useState(false);
     const containerRef = useRef(null);
 
     const stops = [
@@ -143,12 +144,13 @@ const Journey = () => {
             position: 'absolute',
             left: isMobile ? '20px' : '50%',
             top: `${scrollProgress}%`,
-            transform: isMobile ? 'translate(-50%, -50%) rotate(180deg) scale(0.6)' : 'translate(-50%, -50%) rotate(180deg)',
+            transform: isMobile ? `translate(-50%, -50%) rotate(${180 + (spin ? 360 : 0)}deg) scale(0.6)` : `translate(-50%, -50%) rotate(${180 + (spin ? 360 : 0)}deg)`,
             width: '40px',
             height: '80px',
             zIndex: 5,
-            transition: 'top 0.1s linear',
-            filter: 'drop-shadow(0 0 15px var(--color-primary))'
+            transition: 'top 0.1s linear, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            filter: 'drop-shadow(0 0 15px var(--color-primary))',
+            cursor: 'pointer'
         },
         stopNode: (align, index) => ({
             position: 'absolute',
@@ -240,7 +242,7 @@ const Journey = () => {
                     <div style={styles.centerLine}></div>
 
                     {/* F1 Car SVG Representation */}
-                    <div style={styles.car}>
+                    <div style={styles.car} onClick={() => setSpin(prev => !prev)}>
                         <svg viewBox="0 0 60 120" fill="none" style={{ overflow: 'visible' }}>
                             {/* Rear Wing */}
                             <path d="M10 105 H50 V115 H10 Z" fill="#fff" />
