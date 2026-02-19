@@ -89,7 +89,7 @@ const About = () => {
                 <div style={styles.grid}>
                     <RevealOnScroll animation="animate-slide-left">
                         <div style={styles.imagePlaceholder}>
-                            <img src="/DisplayPic.jpg" alt="Rohan Kadam" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#111', objectPosition: 'center', position: 'absolute', top: 0, left: 0 }} />
+                            <img src={`${import.meta.env.BASE_URL}DisplayPic.jpg`} alt="Rohan Kadam" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#111', objectPosition: 'center', position: 'absolute', top: 0, left: 0 }} />
                             <div style={styles.techOverlay}></div>
                         </div>
                     </RevealOnScroll>

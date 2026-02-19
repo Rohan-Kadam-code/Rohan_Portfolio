@@ -96,7 +96,7 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    <a href="/Rohan_Kadam_Resume_v2.docx" download className="btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', margin: '0 0 40px 0' }}>
+                    <a href={`${import.meta.env.BASE_URL}Rohan_Kadam_Resume_v2.docx`} download className="btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', margin: '0 0 40px 0' }}>
                         <i className="fas fa-download"></i> Download Resume
                     </a>
                 </RevealOnScroll>
