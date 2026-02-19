@@ -5,6 +5,7 @@ import GlitchText from './GlitchText';
 const Journey = () => {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [activeStop, setActiveStop] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef(null);
 
     const stops = [
@@ -65,6 +66,13 @@ const Journey = () => {
     ];
 
     useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
         const handleScroll = () => {
             if (containerRef.current) {
                 const rect = containerRef.current.getBoundingClientRect();
@@ -106,16 +114,17 @@ const Journey = () => {
         },
         centerLine: {
             position: 'absolute',
-            left: '50%',
+            left: isMobile ? '20px' : '50%',
             top: '0',
             bottom: '0',
-            width: '60px',
+            width: isMobile ? '4px' : '60px',
             background: '#333',
-            transform: 'translateX(-50%)',
-            backgroundImage: 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.2) 50%)',
+            transform: isMobile ? 'none' : 'translateX(-50%)',
+            backgroundImage: isMobile ? 'none' : 'linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.2) 50%)',
             backgroundSize: '100% 40px',
-            borderLeft: '5px dashed rgba(255, 51, 51, 0.5)',
-            borderRight: '5px dashed rgba(255, 51, 51, 0.5)',
+            borderLeft: isMobile ? 'none' : '5px dashed rgba(255, 51, 51, 0.5)',
+            borderRight: isMobile ? 'none' : '5px dashed rgba(255, 51, 51, 0.5)',
+            border: isMobile ? '1px dashed rgba(255, 51, 51, 0.5)' : 'none',
             zIndex: 1
         },
         kerbs: {
@@ -127,13 +136,14 @@ const Journey = () => {
             transform: 'translateX(-50%)',
             background: 'repeating-linear-gradient(45deg, #cc0000, #cc0000 10px, #ffffff 10px, #ffffff 20px)',
             zIndex: 0,
-            opacity: 0.8
+            opacity: 0.8,
+            display: isMobile ? 'none' : 'block'
         },
         car: {
             position: 'absolute',
-            left: '50%',
+            left: isMobile ? '20px' : '50%',
             top: `${scrollProgress}%`,
-            transform: 'translate(-50%, -50%) rotate(180deg)',
+            transform: isMobile ? 'translate(-50%, -50%) rotate(180deg) scale(0.6)' : 'translate(-50%, -50%) rotate(180deg)',
             width: '40px',
             height: '80px',
             zIndex: 5,
@@ -142,45 +152,45 @@ const Journey = () => {
         },
         stopNode: (align, index) => ({
             position: 'absolute',
-            top: `${8 + index * 22}%`,
-            width: '50%',
-            left: align === 'right' ? '50%' : '0',
+            top: `${isMobile ? 5 + index * 20 : 8 + index * 22}%`,
+            width: isMobile ? '100%' : '50%',
+            left: isMobile ? '0' : (align === 'right' ? '50%' : '0'),
             display: 'flex',
-            justifyContent: align === 'right' ? 'flex-start' : 'flex-end',
-            padding: align === 'right' ? '0 0 0 80px' : '0 80px 0 0',
+            justifyContent: isMobile ? 'flex-start' : (align === 'right' ? 'flex-start' : 'flex-end'),
+            padding: isMobile ? '0 20px 0 50px' : (align === 'right' ? '0 0 0 80px' : '0 80px 0 0'),
             boxSizing: 'border-box',
             zIndex: 3,
         }),
         stopContent: (align, isActive) => ({
             background: isActive ? 'rgba(0, 0, 0, 0.95)' : 'rgba(20, 20, 20, 0.6)',
             border: '1px solid #333',
-            borderLeft: align === 'right' ? `4px solid ${isActive ? '#fff' : 'var(--color-secondary)'}` : '1px solid #333',
-            borderRight: align === 'left' ? `4px solid ${isActive ? '#fff' : 'var(--color-primary)'}` : '1px solid #333',
-            padding: isActive ? '30px' : '20px',
+            borderLeft: isMobile ? `4px solid ${isActive ? '#fff' : 'var(--color-primary)'}` : (align === 'right' ? `4px solid ${isActive ? '#fff' : 'var(--color-secondary)'}` : '1px solid #333'),
+            borderRight: isMobile ? '1px solid #333' : (align === 'left' ? `4px solid ${isActive ? '#fff' : 'var(--color-primary)'}` : '1px solid #333'),
+            padding: isActive ? '25px' : '20px',
             position: 'relative',
             backdropFilter: 'blur(5px)',
             boxShadow: isActive ? '0 0 40px rgba(255, 51, 51, 0.3)' : '0 10px 30px rgba(0,0,0,0.5)',
             borderRadius: '4px',
-            maxWidth: isActive ? '500px' : '350px',
+            maxWidth: isMobile ? '100%' : (isActive ? '500px' : '350px'),
             width: '100%',
             transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            transform: isActive ? (align === 'left' ? 'translateX(-20px) scale(1.05)' : 'translateX(20px) scale(1.05)') : 'translateX(0) scale(1)',
+            transform: isActive ? (isMobile ? 'scale(1)' : (align === 'left' ? 'translateX(-20px) scale(1.05)' : 'translateX(20px) scale(1.05)')) : 'translateX(0) scale(1)',
             opacity: isActive ? 1 : 0.7
         }),
         markerLine: (align, isActive) => ({
             position: 'absolute',
             top: '50%',
-            [align === 'left' ? 'right' : 'left']: isActive ? '-90px' : '-80px',
-            width: isActive ? '90px' : '80px',
+            [isMobile ? 'left' : (align === 'left' ? 'right' : 'left')]: isMobile ? '-30px' : (isActive ? '-90px' : '-80px'),
+            width: isMobile ? '30px' : (isActive ? '90px' : '80px'),
             height: '2px',
-            background: align === 'left' ? 'var(--color-primary)' : 'var(--color-secondary)',
+            background: isMobile ? 'var(--color-primary)' : (align === 'left' ? 'var(--color-primary)' : 'var(--color-secondary)'),
             transition: 'all 0.3s ease'
         }),
         pitLabel: (align, isActive) => ({
             position: 'absolute',
             top: '-15px',
-            [align === 'left' ? 'right' : 'left']: '0',
-            background: isActive ? '#fff' : (align === 'left' ? 'var(--color-primary)' : 'var(--color-secondary)'),
+            [isMobile ? 'left' : (align === 'left' ? 'right' : 'left')]: '0',
+            background: isActive ? '#fff' : (isMobile ? 'var(--color-primary)' : (align === 'left' ? 'var(--color-primary)' : 'var(--color-secondary)')),
             color: '#000',
             fontSize: '0.7rem',
             padding: '2px 8px',
@@ -191,14 +201,14 @@ const Journey = () => {
         }),
         role: {
             color: '#fff',
-            fontSize: '1.2rem',
+            fontSize: isMobile ? '1rem' : '1.2rem',
             fontWeight: 'bold',
             marginBottom: '5px',
             fontFamily: 'var(--font-display)'
         },
         company: {
             color: '#aaa',
-            fontSize: '1rem',
+            fontSize: isMobile ? '0.9rem' : '1rem',
             fontFamily: 'var(--font-mono)'
         },
         details: {

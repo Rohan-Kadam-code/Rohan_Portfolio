@@ -70,6 +70,7 @@ const About = () => {
             display: 'flex',
             gap: '40px',
             marginTop: '30px',
+            flexWrap: 'wrap',
             borderTop: '1px solid #333',
             paddingTop: '30px',
         },

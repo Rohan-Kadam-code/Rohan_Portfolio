@@ -11,6 +11,7 @@ const sections = [
 ];
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
 
@@ -60,6 +61,7 @@ const Navbar = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
+            zIndex: 1003, // Above mobile menu
         },
         logoAccent: {
             color: 'var(--color-primary)',
@@ -96,10 +98,21 @@ const Navbar = () => {
             <div style={styles.logo}>
                 <span style={styles.logoAccent}>//</span> ROHAN KADAM
             </div>
-            <ul style={styles.links} className="nav-links">
-                {sections.map(({ id, label }) => (
-                    <li key={id}>
-                        <a href={`#${id}`} style={styles.link(activeSection === id)}>
+
+            <div className={`mobile-menu-icon ${isOpen ? 'open' : ''}`} onClick={() => setIsOpen(!isOpen)}>
+                <span style={{ transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}></span>
+                <span style={{ opacity: isOpen ? 0 : 1 }}></span>
+                <span style={{ transform: isOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none' }}></span>
+            </div>
+
+            <ul style={styles.links} className={`nav-links ${isOpen ? 'open' : ''}`}>
+                {sections.map(({ id, label }, index) => (
+                    <li key={id} style={{ transitionDelay: `${index * 0.1}s` }}>
+                        <a
+                            href={`#${id}`}
+                            style={styles.link(activeSection === id)}
+                            onClick={() => setIsOpen(false)}
+                        >
                             {label}
                             {activeSection === id && <span style={styles.activeIndicator} />}
                         </a>
