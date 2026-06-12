@@ -6,39 +6,45 @@ import GlitchText from './GlitchText';
 const Projects = () => {
     const projects = [
         {
-            title: 'CAN Bus Analyser & Diagnostic Platform',
-            category: 'Embedded Systems / Automotive Diagnostics',
-            desc: 'A production-grade diagnostic tool for real-time CAN/CAN-FD bus monitoring, DBC-based signal decoding, and UDS diagnostic session management. Features a modular architecture with pluggable protocol decoders and a Qt-based visualization dashboard for ECU communication analysis.',
+            title: 'CAN Bus Analyser & Diagnostics',
+            category: 'EMBEDDED SYSTEMS / VEHICLE NETWORKS',
+            desc: 'A production-grade diagnostic framework for real-time CAN/CAN-FD bus logging, DBC-based message frame decoding, and UDS diagnostic flow control. Features a high-speed filtering core designed for high-throughput automotive buses.',
             tags: ['C++', 'Embedded C', 'CAN Protocol', 'UDS', 'DBC', 'Qt', 'Python'],
             highlight: true,
+            status: 'CALIBRATION_OK',
+            safety: 'ASIL-D AUDITED',
             architecture: [
-                'Hardware Abstraction Layer for multi-vendor CAN interfaces (PEAK, Vector, Kvaser)',
-                'Protocol stack: Raw CAN → DBC Decode → UDS Service Layer',
-                'Real-time filtering & logging engine with configurable trigger conditions',
+                'Hardware Abstraction Layer for multi-channel CAN interfaces (PEAK, Vector, Kvaser)',
+                'Frame processing pipeline: Raw Bus -> DBC Decode -> Service Layer',
+                'Low-latency filtering & triggering engine with configurable condition loops',
             ]
         },
         {
-            title: 'AI-Powered Systems Engineering Platform',
-            category: 'MBSE / AI Architecture',
-            desc: 'An intelligent platform that automates requirements decomposition and system architecture generation using LLMs. Converts natural language requirements into SysML-compatible block diagrams and interface definitions, streamlining the MBSE workflow.',
-            tags: ['Python', 'LangChain', 'React', 'MBSE', 'SysML'],
+            title: 'AI-Powered Systems Engineering Tool',
+            category: 'MBSE / AI APPLICATIONS',
+            desc: 'An intelligent platform automating requirements decomposition and trace matrices via LLMs. Instantly maps natural language system needs into SysML-compliant block definitions and interface contracts.',
+            tags: ['Python', 'LangChain', 'React', 'MBSE', 'SysML', 'RAG'],
             highlight: false,
+            status: 'STABLE_RELEASE',
+            safety: 'ASIL-A COMPLIANT',
             architecture: [
-                'NLP pipeline for requirements parsing and traceability matrix generation',
-                'Architecture inference engine mapping requirements → functional blocks',
-                'Export layer: SysML XML, DOORS-compatible CSV, architecture diagrams',
+                'Semantic requirements parser generating bi-directional trace links',
+                'SysML architecture inference mapping stakeholder inputs -> interfaces',
+                'Export layers for SysML XML, IBM DOORS, and schema diagrams',
             ]
         },
         {
-            title: 'Connected Mobility Platform',
-            category: 'V2X / IoT Solutions',
-            desc: 'A full-stack connected vehicle application with real-time fleet telemetry, OTA update orchestration, and predictive maintenance alerts. Designed with SOA principles for scalable vehicle-cloud communication.',
-            tags: ['React Native', 'Node.js', 'MQTT', 'Socket.io', 'REST API'],
+            title: 'Connected V2X Mobility Platform',
+            category: 'TELEMETRY / V2X NETWORKS',
+            desc: 'A connected vehicle platform supporting low-latency telemetry processing, OTA software orchestration, and anomaly alerting. Built on service-oriented architecture (SOA) for real-time data ingestion.',
+            tags: ['Node.js', 'React Native', 'MQTT', 'Socket.io', 'REST API', 'Redis'],
             highlight: false,
+            status: 'LIVE_UPLINK',
+            safety: 'CYBERSECURITY_SECURE',
             architecture: [
-                'Event-driven microservice architecture for vehicle telemetry ingestion',
-                'MQTT broker for low-latency V2C (Vehicle-to-Cloud) messaging',
-                'Edge computing module for local decision-making and data aggregation',
+                'Event-driven data engine processing up to 10k messages per second',
+                'Secure MQTT telemetry brokers handling vehicle-to-cloud streams',
+                'Edge computing module for local diagnostics and offline caching',
             ]
         }
     ];
@@ -50,90 +56,89 @@ const Projects = () => {
         },
         grid: {
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '40px',
         },
         card: (isHighlight) => ({
-            background: isHighlight
-                ? 'linear-gradient(180deg, #1a0808 0%, #0a0505 100%)'
-                : 'linear-gradient(180deg, #111 0%, #080808 100%)',
-            border: `1px solid ${isHighlight ? '#ff333355' : '#222'}`,
-            padding: '40px',
+            background: 'var(--color-surface)',
+            border: `1px solid ${isHighlight ? 'rgba(225, 6, 0, 0.3)' : 'rgba(255, 255, 255, 0.04)'}`,
+            borderTop: `4px solid ${isHighlight ? 'var(--color-primary)' : 'var(--color-text-muted)'}`,
+            padding: '35px',
             position: 'relative',
             cursor: 'pointer',
             height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            borderRadius: '4px',
+            transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+            boxShadow: isHighlight ? '0 15px 35px rgba(225, 6, 0, 0.08)' : 'none',
         }),
         featuredBadge: {
-            position: 'absolute',
-            top: '15px',
-            right: '15px',
             background: 'var(--color-primary)',
             color: '#fff',
             fontSize: '0.65rem',
-            padding: '3px 10px',
+            padding: '2px 8px',
             fontFamily: 'var(--font-mono)',
             fontWeight: '700',
-            textTransform: 'uppercase',
             letterSpacing: '1px',
+            borderRadius: '2px',
         },
         cardHeader: {
             marginBottom: '20px',
-            borderBottom: '1px solid #222',
-            paddingBottom: '20px',
+            borderBottom: '1px solid rgba(255,255,255,0.05)',
+            paddingBottom: '15px',
         },
         category: {
             color: 'var(--color-secondary)',
-            fontSize: '0.8rem',
-            textTransform: 'uppercase',
-            letterSpacing: '2px',
-            marginBottom: '10px',
+            fontSize: '0.75rem',
+            fontFamily: 'var(--font-mono)',
+            letterSpacing: '1.5px',
+            marginBottom: '8px',
             display: 'block',
+            fontWeight: 700,
         },
         title: {
-            fontSize: '1.4rem',
+            fontSize: '1.35rem',
             fontFamily: 'var(--font-display)',
-            lineHeight: 1.3,
+            lineHeight: 1.25,
+            color: '#fff',
         },
         desc: {
-            color: '#aaa',
+            color: 'var(--color-text-muted)',
             marginBottom: '20px',
-            fontSize: '0.95rem',
-            lineHeight: 1.6,
+            fontSize: '0.9rem',
+            lineHeight: 1.5,
         },
-        archSection: {
-            borderTop: '1px solid #1a1a1a',
-            paddingTop: '15px',
-            marginBottom: '20px',
-        },
-        archLabel: {
-            fontSize: '0.7rem',
-            color: 'var(--color-primary)',
-            textTransform: 'uppercase',
-            letterSpacing: '2px',
-            marginBottom: '10px',
+        specBox: {
+            background: 'var(--color-bg)',
+            padding: '12px 18px',
+            borderRadius: '2px',
             fontFamily: 'var(--font-mono)',
-            fontWeight: '600',
+            fontSize: '0.75rem',
+            color: '#8e8e9e',
+            marginBottom: '20px',
+            borderLeft: '2px solid rgba(255, 255, 255, 0.05)',
         },
-        archItem: {
-            fontSize: '0.85rem',
-            color: '#888',
-            marginBottom: '6px',
+        specLine: {
             display: 'flex',
-            gap: '8px',
-            lineHeight: 1.4,
+            justifyContent: 'space-between',
+            marginBottom: '4px',
         },
         tags: {
             display: 'flex',
-            gap: '8px',
+            gap: '6px',
             flexWrap: 'wrap',
+            marginTop: 'auto',
         },
         tag: {
-            fontSize: '0.75rem',
-            padding: '4px 10px',
-            background: '#1a1a1a',
-            color: '#888',
+            fontSize: '0.7rem',
+            padding: '3px 8px',
+            background: 'var(--color-bg)',
+            color: '#bbb',
             borderRadius: '2px',
             fontFamily: 'var(--font-mono)',
+            border: '1px solid rgba(255,255,255,0.03)',
         },
     };
 
@@ -142,32 +147,52 @@ const Projects = () => {
             <div className="container">
                 <RevealOnScroll>
                     <h2 className="section-title">
-                        <GlitchText text="SYSTEM BUILDS" />
-                        <span style={{ fontSize: '0.5em', color: 'var(--color-text-muted)' }}> // SELECTED WORKS</span>
+                        <GlitchText text="GARAGE BUILDS" />
+                        <span style={{ fontSize: '0.5em', color: 'var(--color-text-muted)' }}> // SELECTED AUTOMOTIVE NODES</span>
                     </h2>
                 </RevealOnScroll>
 
                 <div style={styles.grid}>
                     {projects.map((project, index) => (
-                        <RevealOnScroll key={index} delay={index * 0.15}>
+                        <RevealOnScroll key={index} delay={index * 0.12}>
                             <TiltCard style={styles.card(project.highlight)}>
-                                {project.highlight && (
-                                    <div style={styles.featuredBadge}>★ FEATURED</div>
-                                )}
-                                <div style={styles.cardHeader}>
-                                    <span style={styles.category}>{project.category}</span>
-                                    <h3 style={styles.title}>{project.title}</h3>
-                                </div>
-                                <p style={styles.desc}>{project.desc}</p>
-
-                                <div style={styles.archSection}>
-                                    <div style={styles.archLabel}>Architecture Highlights</div>
-                                    {project.architecture.map((item, i) => (
-                                        <div key={i} style={styles.archItem}>
-                                            <span style={{ color: 'var(--color-primary)', flexShrink: 0 }}>▸</span>
-                                            <span>{item}</span>
+                                <div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                            <span className={`f1-led-light ${project.highlight ? 'f1-led-red' : 'f1-led-green'}`} />
+                                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#666' }}>
+                                                {project.status}
+                                            </span>
                                         </div>
-                                    ))}
+                                        {project.highlight && (
+                                            <div style={styles.featuredBadge}>★ OVERTAKE ACTIVE</div>
+                                        )}
+                                    </div>
+                                    
+                                    <div style={styles.cardHeader}>
+                                        <span style={styles.category}>{project.category}</span>
+                                        <h3 style={styles.title}>{project.title}</h3>
+                                    </div>
+                                    
+                                    <p style={styles.desc}>{project.desc}</p>
+
+                                    {/* HUD Specifications Area */}
+                                    <div style={styles.specBox}>
+                                        <div style={styles.specLine}>
+                                            <span>SAFETY RATING</span>
+                                            <span style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>{project.safety}</span>
+                                        </div>
+                                        <div style={{ borderTop: '1px dashed rgba(255,255,255,0.05)', margin: '8px 0' }} />
+                                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#666', marginBottom: '6px', textTransform: 'uppercase' }}>
+                                            ECU ARCHITECTURE SPECS:
+                                        </div>
+                                        {project.architecture.map((item, i) => (
+                                            <div key={i} style={{ display: 'flex', gap: '6px', marginBottom: '4px', lineHeight: 1.3 }}>
+                                                <span style={{ color: 'var(--color-secondary)' }}>▸</span>
+                                                <span>{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
 
                                 <div style={styles.tags}>

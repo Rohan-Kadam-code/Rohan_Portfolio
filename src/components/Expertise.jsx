@@ -4,18 +4,19 @@ import GlitchText from './GlitchText';
 
 const toolkitLayers = [
     {
-        layer: 'Protocols & Networks',
+        layer: 'BUS_01_NETWORKS',
+        title: 'Protocols & Networks',
         items: [
             { name: 'CAN / CAN-FD', icon: 'fa-solid fa-bolt' },
             { name: 'LIN', icon: 'fa-solid fa-link' },
             { name: 'FlexRay', icon: 'fa-solid fa-project-diagram' },
             { name: 'Automotive Ethernet', icon: 'fa-solid fa-ethernet' },
-            { name: 'UDS / DoIP', icon: 'fa-solid fa-stethoscope' },
-            { name: 'XCP / A2L', icon: 'fa-solid fa-satellite-dish' },
+            
         ]
     },
     {
-        layer: 'Architecture & Standards',
+        layer: 'BUS_02_STANDARDS',
+        title: 'Architecture & Standards',
         items: [
             { name: 'AUTOSAR Classic', icon: 'fa-solid fa-layer-group' },
             { name: 'AUTOSAR Adaptive', icon: 'fa-solid fa-cubes' },
@@ -26,7 +27,8 @@ const toolkitLayers = [
         ]
     },
     {
-        layer: 'Tools & Platforms',
+        layer: 'BUS_03_TOOLS',
+        title: 'Tools & Platforms',
         items: [
             { name: 'Vector CANoe', icon: 'fa-solid fa-desktop' },
             { name: 'ETAS INCA', icon: 'fa-solid fa-wrench' },
@@ -36,41 +38,69 @@ const toolkitLayers = [
         ]
     },
     {
-        layer: 'CAD & Simulation',
+        layer: 'BUS_04_PHYSICS',
+        title: 'CAD & Simulation',
         items: [
             { name: 'SolidWorks', icon: 'fa-solid fa-cube' },
             { name: 'CATIA', icon: 'fa-solid fa-plane' },
             { name: 'Creo', icon: 'fa-solid fa-pen-ruler' },
-            { name: 'FreeCAD', icon: 'fa-solid fa-box-open' },
             { name: 'ANSYS', icon: 'fa-solid fa-wind' },
             { name: 'GT-Suite', icon: 'fa-solid fa-gauge-high' },
         ]
     },
     {
-        layer: 'Languages & Embedded',
+        layer: 'BUS_05_FIRMWARE',
+        title: 'Languages & Embedded',
         items: [
             { name: 'Embedded C', icon: 'devicon-c-plain' },
             { name: 'C++ (MISRA)', icon: 'devicon-cplusplus-plain' },
             { name: 'Python', icon: 'devicon-python-plain' },
             { name: 'RTOS (FreeRTOS)', icon: 'fa-solid fa-stopwatch' },
-            { name: 'Embedded Linux (Yocto)', icon: 'devicon-linux-plain' },
+            { name: 'Embedded Linux', icon: 'devicon-linux-plain' },
         ]
     },
     {
-        layer: 'AI & Data Engineering',
+        layer: 'BUS_06_DATA_AI',
+        title: 'AI & Data Engineering',
         items: [
             { name: 'LLM Integration', icon: 'fa-solid fa-brain' },
             { name: 'Agentic AI Systems', icon: 'fa-solid fa-robot' },
             { name: 'LangChain / RAG', icon: 'fa-solid fa-link' },
             { name: 'Data Analysis (Pandas)', icon: 'devicon-pandas-plain' },
-            { name: 'Prompt Engineering', icon: 'fa-solid fa-comment-dots' },
             { name: 'ML Pipelines', icon: 'fa-solid fa-network-wired' },
         ]
     },
 ];
 
-const accentColor = '#ff3333';
-const accentDim = '#ff333322';
+const accentColor = '#E10600';
+const accentDim = 'rgba(225, 6, 0, 0.15)';
+
+// Sub-component to render live dynamic sensor waves on hover
+const LiveWave = () => {
+    const [path, setPath] = useState('');
+
+    useEffect(() => {
+        let t = 0;
+        const interval = setInterval(() => {
+            let points = [];
+            for (let x = 0; x <= 120; x += 5) {
+                // Combine sine waves to simulate a telemetry sensor output (noise + harmonics)
+                const y = 15 + Math.sin(x * 0.1 + t) * 8 + Math.cos(x * 0.05 + t * 0.5) * 4;
+                points.push(`${x},${y}`);
+            }
+            setPath(`M ${points.join(' L ')}`);
+            t += 0.25;
+        }, 50);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <svg width="120" height="30" style={{ overflow: 'visible', opacity: 0.85 }}>
+            <path d={path} fill="none" stroke="var(--color-secondary)" strokeWidth="1.5" />
+        </svg>
+    );
+};
 
 const ToolkitItem = ({ item }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -78,12 +108,12 @@ const ToolkitItem = ({ item }) => {
     const style = {
         display: 'flex',
         alignItems: 'center',
-        gap: '10px',
-        padding: '12px 16px',
-        background: isHovered ? 'rgba(255, 51, 51, 0.06)' : 'var(--color-bg)',
-        border: `1px solid ${isHovered ? accentColor : '#222'}`,
-        borderRadius: '4px',
-        transition: 'all 0.3s ease',
+        justifyContent: 'space-between',
+        padding: '12px 18px',
+        background: isHovered ? 'rgba(16, 16, 24, 0.9)' : 'var(--color-bg)',
+        border: `1px solid ${isHovered ? accentColor : 'rgba(255, 255, 255, 0.03)'}`,
+        borderRadius: '2px',
+        transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
         cursor: 'default',
         boxShadow: isHovered ? `0 0 15px ${accentDim}` : 'none',
         transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
@@ -95,13 +125,30 @@ const ToolkitItem = ({ item }) => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <i className={item.icon} style={{ fontSize: '1.2rem', color: isHovered ? accentColor : '#666', transition: 'color 0.3s ease' }}></i>
-            <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.9rem',
-                color: isHovered ? '#fff' : '#bbb',
-                transition: 'color 0.3s ease',
-            }}>{item.name}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <i className={item.icon} style={{ 
+                    fontSize: '1.1rem', 
+                    color: isHovered ? accentColor : 'var(--color-text-muted)', 
+                    transition: 'color 0.2s ease' 
+                }}></i>
+                <span style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.85rem',
+                    color: isHovered ? '#fff' : '#b2b2c2',
+                    transition: 'color 0.2s ease',
+                    fontWeight: 600,
+                }}>{item.name}</span>
+            </div>
+
+            {/* Render dynamic waveform instead of static indicators when hovered */}
+            {isHovered ? (
+                <LiveWave />
+            ) : (
+                <div style={{ display: 'flex', gap: '3px' }}>
+                    <span className="f1-led-light f1-led-green" style={{ width: '4px', height: '4px', opacity: 0.3 }} />
+                    <span className="f1-led-light f1-led-green" style={{ width: '4px', height: '4px', opacity: 0.8 }} />
+                </div>
+            )}
         </div>
     );
 };
@@ -126,13 +173,13 @@ const AnimatedLayerBar = ({ delay }) => {
 
     return (
         <div ref={ref} style={{
-            width: '4px',
+            width: '3px',
             height: '100%',
-            background: '#222',
+            background: 'rgba(255,255,255,0.03)',
             position: 'absolute',
             left: 0,
             top: 0,
-            borderRadius: '2px',
+            borderRadius: '1px',
             overflow: 'hidden',
         }}>
             <div style={{
@@ -159,24 +206,34 @@ const Expertise = () => {
         },
         layerCard: {
             position: 'relative',
-            paddingLeft: '20px',
+            paddingLeft: '25px',
         },
         layerHeader: {
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
+            gap: '15px',
             marginBottom: '20px',
+        },
+        layerCode: {
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.85rem',
+            color: 'var(--color-secondary)',
+            fontWeight: 'bold',
+            background: 'rgba(0, 255, 102, 0.05)',
+            padding: '2px 8px',
+            borderRadius: '2px',
         },
         layerName: {
             fontFamily: 'var(--font-display)',
-            fontSize: '1.1rem',
+            fontSize: '1.05rem',
             textTransform: 'uppercase',
-            letterSpacing: '2px',
-            color: accentColor,
+            letterSpacing: '1px',
+            color: '#fff',
+            fontWeight: 'bold',
         },
         itemsGrid: {
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
             gap: '12px',
         },
     };
@@ -186,22 +243,23 @@ const Expertise = () => {
             <div className="container">
                 <RevealOnScroll>
                     <h2 className="section-title">
-                        <GlitchText text="ARCHITECTURE TOOLKIT" />
-                        <span style={{ fontSize: '0.5em', color: 'var(--color-text-muted)' }}> // TECH STACK</span>
+                        <GlitchText text="QUALIFYING TOOLKIT" />
+                        <span style={{ fontSize: '0.5em', color: 'var(--color-text-muted)' }}> // TECHNICAL BUS CHANNELS</span>
                     </h2>
                 </RevealOnScroll>
 
                 <div style={styles.layerContainer}>
                     {toolkitLayers.map((layer, layerIndex) => (
-                        <RevealOnScroll key={layerIndex} delay={layerIndex * 0.1}>
+                        <RevealOnScroll key={layerIndex} delay={layerIndex * 0.08}>
                             <div style={styles.layerCard}>
-                                <AnimatedLayerBar delay={layerIndex * 0.15} />
+                                <AnimatedLayerBar delay={layerIndex * 0.1} />
                                 <div style={styles.layerHeader}>
-                                    <span style={styles.layerName}>{layer.layer}</span>
+                                    <span style={styles.layerCode}>{layer.layer}</span>
+                                    <span style={styles.layerName}>{layer.title}</span>
                                     <div style={{
                                         flex: 1,
                                         height: '1px',
-                                        background: `linear-gradient(90deg, ${accentDim}, transparent)`,
+                                        background: 'linear-gradient(90deg, rgba(255,255,255,0.05), transparent)',
                                     }} />
                                 </div>
                                 <div style={styles.itemsGrid}>
