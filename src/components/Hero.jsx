@@ -61,6 +61,14 @@ const Hero = () => {
     const [gear, setGear] = useState(7);
     const [drsActive, setDrsActive] = useState(false);
     const [lapTime, setLapTime] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 1024);
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const getExperience = () => {
         const startDate = new Date(2019, 6, 1); // July 1, 2019
@@ -125,21 +133,22 @@ const Hero = () => {
             position: 'relative',
             overflow: 'hidden',
             paddingTop: 'var(--nav-height)',
+            paddingBottom: isMobile ? '60px' : '0',
             background: 'radial-gradient(ellipse at 50% 60%, #23273a 0%, var(--color-bg) 70%)',
         }}>
             <TrackBackground />
 
-            {/* Full-width 3-column grid */}
+            {/* Responsive column grid */}
             <div style={{
                 position: 'relative',
                 zIndex: 3,
                 display: 'grid',
-                gridTemplateColumns: '220px 1fr 220px',
-                gap: '0',
+                gridTemplateColumns: isMobile ? '1fr' : '220px 1fr 220px',
+                gap: isMobile ? '40px' : '0',
                 width: '100%',
                 height: '100%',
                 alignItems: 'center',
-                padding: '0',
+                padding: isMobile ? '40px 20px' : '0',
             }} className="animate-fade-in hero-container">
 
                 {/* ── LEFT: Driver Card ── */}
@@ -147,10 +156,16 @@ const Hero = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '12px',
-                    padding: '40px 24px 40px 40px',
-                    borderRight: '1px solid rgba(255,255,255,0.07)',
+                    padding: isMobile ? '30px 20px' : '40px 24px 40px 40px',
+                    borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.07)',
+                    borderTop: isMobile ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                    borderBottom: isMobile ? '1px solid rgba(255,255,255,0.07)' : 'none',
                     height: '100%',
                     justifyContent: 'center',
+                    order: isMobile ? 2 : 1,
+                    width: isMobile ? '100%' : 'auto',
+                    maxWidth: isMobile ? '500px' : 'none',
+                    margin: isMobile ? '0 auto' : '0',
                 }}>
                     {/* Race number */}
                     <div style={{
@@ -170,7 +185,6 @@ const Hero = () => {
                         <StatRow label="Constructor" value="COGNIZANT Technologies" accent="var(--color-primary)" />
                         <StatRow label="Base" value="PUNE, INDIA" />
                         <StatRow label="Active Since" value="2019" />
-                        
                     </div>
 
                     {/* Position badge */}
@@ -192,8 +206,15 @@ const Hero = () => {
                 </div>
 
                 {/* ── CENTER: Main content ── */}
-                <div style={{ padding: '40px 50px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-
+                <div style={{
+                    padding: isMobile ? '20px 10px' : '40px 50px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: isMobile ? 'center' : 'flex-start',
+                    textAlign: isMobile ? 'center' : 'left',
+                    order: isMobile ? 1 : 2,
+                }}>
 
                     {/* Session tag */}
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--color-primary)', letterSpacing: '5px', fontWeight: 700, marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -202,19 +223,45 @@ const Hero = () => {
                     </div>
 
                     {/* Title */}
-                    <h1 style={{ fontSize: 'clamp(3rem, 5.5vw, 5.2rem)', fontWeight: 900, lineHeight: '0.95', letterSpacing: '-2px', fontStyle: 'italic', marginBottom: '20px', textTransform: 'uppercase' }}>
+                    <h1 style={{
+                        fontSize: isMobile ? 'clamp(2rem, 8vw, 3.2rem)' : 'clamp(3rem, 5.5vw, 5.2rem)',
+                        fontWeight: 900,
+                        lineHeight: '0.95',
+                        letterSpacing: '-2px',
+                        fontStyle: 'italic',
+                        marginBottom: '20px',
+                        textTransform: 'uppercase',
+                        textAlign: isMobile ? 'center' : 'left'
+                    }}>
                         POWERTRAIN <br />
                         <span style={{ color: 'transparent', WebkitTextStroke: '1.5px #fff' }}>SYSTEMS ENGINEER</span>
                     </h1>
 
-                    {/* Description — single line */}
-                    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', lineHeight: '1.5', marginBottom: '30px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {/* Description — wrapped on mobile to avoid cutting */}
+                    <p style={{
+                        color: 'var(--color-text-muted)',
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        marginBottom: '30px',
+                        whiteSpace: isMobile ? 'normal' : 'nowrap',
+                        overflow: isMobile ? 'visible' : 'hidden',
+                        textOverflow: isMobile ? 'clip' : 'ellipsis',
+                        textAlign: isMobile ? 'center' : 'left',
+                        maxWidth: isMobile ? '600px' : 'none',
+                    }}>
                         {text}
                         <span className="animate-pulse" style={{ display: 'inline-block', width: '2px', height: '1em', background: 'var(--color-primary)', verticalAlign: 'text-bottom', marginLeft: '2px' }} />
                     </p>
 
                     {/* CTAs — symmetric equal-width buttons */}
-                    <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                    <div style={{
+                        display: 'flex',
+                        gap: '14px',
+                        alignItems: 'center',
+                        justifyContent: isMobile ? 'center' : 'flex-start',
+                        flexWrap: isMobile ? 'wrap' : 'nowrap',
+                        width: '100%',
+                    }}>
                         <MagneticButton href="#journey" className="btn f1-skew-btn" strength={0.25}
                             style={{ width: '160px', textAlign: 'center', justifyContent: 'center', display: 'flex' }}>
                             <span>DRIVE CIRCUIT</span>
@@ -231,10 +278,14 @@ const Hero = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '14px',
-                    padding: '40px 40px 40px 24px',
-                    borderLeft: '1px solid rgba(255,255,255,0.07)',
+                    padding: isMobile ? '30px 20px' : '40px 40px 40px 24px',
+                    borderLeft: isMobile ? 'none' : '1px solid rgba(255,255,255,0.07)',
                     height: '100%',
                     justifyContent: 'center',
+                    order: isMobile ? 3 : 3,
+                    width: isMobile ? '100%' : 'auto',
+                    maxWidth: isMobile ? '500px' : 'none',
+                    margin: isMobile ? '0 auto' : '0',
                 }}>
                     {/* Big XP number */}
                     <StatRow label="Total Experience" value={getExperience()} accent="#fff" big />
