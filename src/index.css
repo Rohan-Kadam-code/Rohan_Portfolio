@@ -245,6 +245,10 @@ ul {
     opacity: 1;
     transform: translateY(0);
   }
+
+  .contact-form {
+    padding: 25px 20px !important;
+  }
 }
 
 /* F1 Redesign Utilities */

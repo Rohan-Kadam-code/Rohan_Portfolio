@@ -62,10 +62,12 @@ const Contact = () => {
         },
         inputGroup: {
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
             gap: '20px',
         },
         input: {
+            width: '100%',
+            minWidth: '0',
             padding: '14px 18px',
             background: 'var(--color-bg)',
             border: '1px solid rgba(255,255,255,0.06)',
@@ -77,6 +79,7 @@ const Contact = () => {
             transition: 'border-color 0.2s ease',
         },
         textarea: {
+            width: '100%',
             padding: '14px 18px',
             background: 'var(--color-bg)',
             border: '1px solid rgba(255,255,255,0.06)',
@@ -177,6 +180,7 @@ const Contact = () => {
                 <RevealOnScroll delay={0.15}>
                     <form
                         style={styles.form}
+                        className="contact-form"
                         onSubmit={(e) => {
                             e.preventDefault();
                             setIsSending(true);
