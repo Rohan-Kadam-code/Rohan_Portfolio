@@ -164,7 +164,21 @@ To finalize the supplier combinations, I utilized a Pugh Matrix weighing both ob
 - SAM Analysis: Conducted Serviceability, Accessibility, and Maintainability (SAM) audits on the cooling package to ensure coolant ports, oil filters, and fan belts could be serviced easily.`
             },
             {
-                title: '2.5 Prototype Validation and Supplier Collaboration',
+                title: '2.5 IoT Telematics & Fleet Management Systems',
+                content: `As industrial operations transitioned to smart warehouses, integrating connectivity into the forklift became a core program requirement. I co-engineered the software features and telematics interface that transformed the vehicle from a standalone lift into a connected fleet node.
+
+Operator Security & Anti-Theft Systems:
+- Fuel Cut-Off Interlocks: Designed an anti-theft system that controlled an electronic fuel-cut solenoid. The engine could only start if the driver entered a valid pin on the dashboard or scanned an authorized RFID badge, preventing unauthorized usage in shipyards and factories.
+- Driver Presence Detection: Integrated safety seat-switches and seatbelt sensors. If the driver left the seat for more than 2 seconds, a safety controller neutralized the transmission and locked the hydraulic mast lift, preventing rollaway or tipping hazards.
+- Control Input Calibration: Calibrated high-precision potentiometers for the electronic throttle and hydraulic joystick levers, mapping voltage swings to proportional valve commands.
+
+Connected Fleet Telematics (IoT):
+- CAN Bus Logging (SAE J1939): Configured the Telematics Control Unit (TCU) to listen to the vehicle's CAN bus. It logged parameters like engine RPM, transmission oil temperature, lift cycles, fuel level, and operating hours.
+- Diagnostic Trouble Codes (DTCs): Defined custom diagnostic codes and warning thresholds (such as hydraulic temperature spikes or low system voltage) that immediately triggered telemetry alerts to warehouse management portals.
+- Store-and-Forward Data Resiliency: Sizable warehouses have cellular dead zones. We designed a local storage buffer in the TCU's flash memory. When network connection was lost, telemetry packets were cached and automatically uploaded once connection was restored or synced to a technician's mobile app via Bluetooth.`
+            },
+            {
+                title: '2.6 Prototype Validation and Supplier Collaboration',
                 content: `The culmination of the forklift project was the assembly and testing of physical prototypes.
 
 - The Flywheel Matching Challenge: During assembly, we encountered a critical mismatch between the engine flywheel interface and the input shaft of the selected Powershift transmission. I worked closely with the engine supplier, leading the design modifications of the flywheel coupler. This collaborative effort resolved the alignment issue without delaying the prototype build schedule.
