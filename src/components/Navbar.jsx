@@ -7,6 +7,7 @@ const sections = [
     { id: 'journey', label: 'RACE' },
     { id: 'toolkit', label: 'QUALIFYING' },
     { id: 'projects', label: 'GARAGE' },
+    { id: 'journal', label: 'DEBRIEF' },
     { id: 'contact', label: 'PIT WALL' },
 ];
 
@@ -26,6 +27,12 @@ const Navbar = () => {
                 setScrollPercent(Math.round((window.scrollY / totalHeight) * 100));
             }
 
+            // If we are on the debrief page, force active section to 'journal'
+            if (window.location.hash === '#/debrief') {
+                setActiveSection('journal');
+                return;
+            }
+
             // Determine active section
             let current = 'hero';
             for (const section of sections) {
@@ -40,8 +47,26 @@ const Navbar = () => {
             }
             setActiveSection(current);
         };
+
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        
+        // Listen to hash change to update active state instantly
+        const handleHashChange = () => {
+            if (window.location.hash === '#/debrief') {
+                setActiveSection('journal');
+            } else {
+                handleScroll();
+            }
+        };
+        window.addEventListener('hashchange', handleHashChange);
+        
+        // Initial run
+        handleScroll();
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('hashchange', handleHashChange);
+        };
     }, []);
 
     const styles = {
@@ -141,9 +166,18 @@ const Navbar = () => {
                                 className={!isActive ? 'nav-link-item' : ''}
                                 onClick={() => {
                                     setIsOpen(false);
-                                    const element = document.getElementById(id);
-                                    if (element) {
-                                        element.scrollIntoView({ behavior: 'smooth' });
+                                    if (id === 'journal') {
+                                        window.location.hash = '#/debrief';
+                                    } else {
+                                        const isOnDebrief = window.location.hash === '#/debrief';
+                                        window.location.hash = `#${id}`;
+                                        // If we are already on main page, scroll directly
+                                        if (!isOnDebrief) {
+                                            const element = document.getElementById(id);
+                                            if (element) {
+                                                element.scrollIntoView({ behavior: 'smooth' });
+                                            }
+                                        }
                                     }
                                 }}
                             >
