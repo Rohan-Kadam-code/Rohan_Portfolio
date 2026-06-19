@@ -6,6 +6,7 @@ import Journey from './components/Journey';
 import Expertise from './components/Expertise';
 import Projects from './components/Projects';
 import Journal from './components/Journal';
+import TorqueConverter from './components/TorqueConverter';
 import Contact from './components/Contact';
 import MouseGlow from './components/MouseGlow';
 import LoadingScreen from './components/LoadingScreen';
@@ -13,7 +14,10 @@ import LoadingScreen from './components/LoadingScreen';
 function App() {
   const [loading, setLoading] = useState(true);
   const [currentView, setCurrentView] = useState(() => {
-    return window.location.hash === '#/debrief' ? 'debrief' : 'main';
+    const hash = window.location.hash;
+    if (hash === '#/debrief') return 'debrief';
+    if (hash === '#/tuning-lab') return 'tuning-lab';
+    return 'main';
   });
 
   useEffect(() => {
@@ -21,6 +25,9 @@ function App() {
       const hash = window.location.hash;
       if (hash === '#/debrief') {
         setCurrentView('debrief');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#/tuning-lab') {
+        setCurrentView('tuning-lab');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setCurrentView('main');
@@ -37,7 +44,7 @@ function App() {
 
     window.addEventListener('hashchange', handleHashChange);
     // Trigger scroll check on initial load if we have a target hash
-    if (window.location.hash && window.location.hash !== '#/debrief') {
+    if (window.location.hash && window.location.hash !== '#/debrief' && window.location.hash !== '#/tuning-lab') {
       handleHashChange();
     }
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -51,6 +58,8 @@ function App() {
         <Navbar />
         {currentView === 'debrief' ? (
           <Journal />
+        ) : currentView === 'tuning-lab' ? (
+          <TorqueConverter />
         ) : (
           <>
             <Hero />

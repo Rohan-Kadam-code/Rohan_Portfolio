@@ -7,6 +7,7 @@ const sections = [
     { id: 'journey', label: 'RACE' },
     { id: 'toolkit', label: 'QUALIFYING' },
     { id: 'projects', label: 'GARAGE' },
+    { id: 'tuning-lab', label: 'TUNING LAB' },
     { id: 'journal', label: 'DEBRIEF' },
     { id: 'contact', label: 'PIT WALL' },
 ];
@@ -33,6 +34,12 @@ const Navbar = () => {
                 return;
             }
 
+            // If we are on the tuning lab page, force active section to 'tuning-lab'
+            if (window.location.hash === '#/tuning-lab') {
+                setActiveSection('tuning-lab');
+                return;
+            }
+
             // Determine active section
             let current = 'hero';
             for (const section of sections) {
@@ -54,6 +61,8 @@ const Navbar = () => {
         const handleHashChange = () => {
             if (window.location.hash === '#/debrief') {
                 setActiveSection('journal');
+            } else if (window.location.hash === '#/tuning-lab') {
+                setActiveSection('tuning-lab');
             } else {
                 handleScroll();
             }
@@ -168,8 +177,10 @@ const Navbar = () => {
                                     setIsOpen(false);
                                     if (id === 'journal') {
                                         window.location.hash = '#/debrief';
+                                    } else if (id === 'tuning-lab') {
+                                        window.location.hash = '#/tuning-lab';
                                     } else {
-                                        const isOnDebrief = window.location.hash === '#/debrief';
+                                        const isOnDebrief = window.location.hash === '#/debrief' || window.location.hash === '#/tuning-lab';
                                         window.location.hash = `#${id}`;
                                         // If we are already on main page, scroll directly
                                         if (!isOnDebrief) {
