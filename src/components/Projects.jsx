@@ -6,23 +6,9 @@ import GlitchText from './GlitchText';
 const Projects = () => {
     const projects = [
         {
-            title: 'CAN Bus Analyser & Diagnostics',
-            category: 'EMBEDDED SYSTEMS / VEHICLE NETWORKS',
-            desc: 'A production-grade diagnostic framework for real-time CAN/CAN-FD bus logging, DBC-based message frame decoding, and UDS diagnostic flow control. Features a high-speed filtering core designed for high-throughput automotive buses.',
-            tags: ['C++', 'Embedded C', 'CAN Protocol', 'UDS', 'DBC', 'Qt', 'Python'],
-            highlight: true,
-            status: 'CALIBRATION_OK',
-            safety: 'ASIL-D AUDITED',
-            architecture: [
-                'Hardware Abstraction Layer for multi-channel CAN interfaces (PEAK, Vector, Kvaser)',
-                'Frame processing pipeline: Raw Bus -> DBC Decode -> Service Layer',
-                'Low-latency filtering & triggering engine with configurable condition loops',
-            ]
-        },
-        {
-            title: 'AI-Powered Systems Engineering Tool',
+            title: 'AI-Powered Systems Engineering Platform (AISE)',
             category: 'MBSE / AI APPLICATIONS',
-            desc: 'An intelligent platform automating requirements decomposition and trace matrices via LLMs. Instantly maps natural language system needs into SysML-compliant block definitions and interface contracts.',
+            desc: 'An intelligent systems engineering platform automating requirements decomposition and trace matrices using LLMs. Instantly maps natural language system requirements into SysML-compliant block definitions and interface contracts.',
             tags: ['Python', 'LangChain', 'React', 'MBSE', 'SysML', 'RAG'],
             highlight: false,
             status: 'STABLE_RELEASE',
@@ -34,17 +20,17 @@ const Projects = () => {
             ]
         },
         {
-            title: 'Connected V2X Mobility Platform',
-            category: 'TELEMETRY / V2X NETWORKS',
-            desc: 'A connected vehicle platform supporting low-latency telemetry processing, OTA software orchestration, and anomaly alerting. Built on service-oriented architecture (SOA) for real-time data ingestion.',
-            tags: ['Node.js', 'React Native', 'MQTT', 'Socket.io', 'REST API', 'Redis'],
-            highlight: false,
-            status: 'LIVE_UPLINK',
-            safety: 'CYBERSECURITY_SECURE',
+            title: 'F1 Telemetry & 3D Race Visualisation',
+            category: 'VEHICLE KINETICS / WEBGL SIMULATION',
+            desc: 'A real-time telemetry streaming and interactive 3D visualization dashboard. Decodes live CAN and sensor streams over WebSockets to render vehicle kinetics, tire thermal zones, and track positioning in a high-performance WebGL-based 3D environment.',
+            tags: ['React', 'Three.js', 'WebGL', 'WebSockets', 'MQTT', 'Python', 'Node.js'],
+            highlight: true,
+            status: 'TELEMETRY_STREAMING',
+            safety: 'REAL-TIME LOGGED',
             architecture: [
-                'Event-driven data engine processing up to 10k messages per second',
-                'Secure MQTT telemetry brokers handling vehicle-to-cloud streams',
-                'Edge computing module for local diagnostics and offline caching',
+                'WebSocket server ingestion layer processing high-frequency sensor telemetry',
+                'Interactive 3D WebGL scene displaying vehicle chassis orientation, velocity vectors, and tire temps',
+                'Interactive track overlay with GPS mapping and predictive lap timing overlays',
             ]
         }
     ];

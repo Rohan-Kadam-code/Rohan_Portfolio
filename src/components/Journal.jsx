@@ -186,6 +186,168 @@ Connected Fleet Telematics (IoT):
 - The Design Standard: To capture these engineering lessons, I wrote a comprehensive technical design guide: "Forklift Power Systems Designs". This standard was distributed to Godrej engineers to serve as the blueprint for future forklift platform developments.`
             }
         ]
+    },
+    {
+        id: 'log_03',
+        title: 'M&M Powertrain & EV Cooling',
+        subtitle: 'LOG_03 // MAHINDRA GP // THERMAL CFD & ASIL SAFETY CASE',
+        date: '2022–2023',
+        system: 'THERMAL SYSTEMS',
+        specs: [
+            { label: 'ROLE & TEAM', value: 'OWNER // 2 ENG', status: 'LEAD_ROLE' },
+            { label: 'HEAT REJECTION', value: 'U · A · ΔT_LMTD', status: 'SIZING_OK' },
+            { label: 'VP0 BUILD ISSUES', value: '15+ RESOLVED', status: '8D_CHAMPION' },
+            { label: 'SAFETY CASE', value: 'ISO 26262 ASIL-C', status: 'HOMOLOGATED' }
+        ],
+        overview: 'Architecting powertrain cooling and EV thermal management systems, running 3D CFD airflow simulations and wind tunnel validations, and driving ASIL-C safety cases through production gateways.',
+        sections: [
+            {
+                title: '3.1 Powertrain Cooling Systems & Component Sizing',
+                content: `Transitioning to Mahindra & Mahindra’s Commercial Vehicle department as an Assistant Manager, I was appointed the primary owner of the vehicle cooling systems. In this role, I demonstrated strong team leadership by managing a team of 2 engineers, delegating design tasks, setting milestone targets, and orchestrating cross-functional collaboration between simulation, sourcing, quality, and prototype assembly teams to clear critical gateways on schedule.
+
+I had complete responsibility for the cooling system architecture from concept (mule vehicle design) through physical validation to mass production. Leveraging my 3D CAD proficiency (utilizing CATIA V5), I designed complex packaging layouts under the hood, routing high-pressure coolant lines and packaging thermal modules within highly constrained engine bay envelopes.
+
+Furthermore, I directed the creation of production-ready 2D manufacturing drawings incorporating strict Geometric Dimensioning and Tolerancing (GD&T) and tolerance stack-up analyses. Releasing these designs through PLM systems (such as Siemens Teamcenter) ensured flawless fitment, minimized assembly variations, and facilitated supplier onboarding and tooling signoff for radiator and intercooler assemblies.
+
+The scope covered the complete thermal architecture, requiring the custom design, sizing, and packaging of:
+- Radiators: Sizing the active surface area and core thickness to dissipate high thermal loads.
+- Intercoolers: Optimizing charge-air cooling density to ensure peak volumetric combustion efficiency.
+- Expansion Tanks: Sizing fluid capacities and pressure cap thresholds to handle system degas and thermal expansion cycles.
+- Coolant Hose Routing: Optimizing routing envelopes under the hood to ensure thermal isolation and prevent hose kinking.
+
+The Heat Rejection Sizing Equation:
+To size the radiator core area (A), I established a physics-based sizing framework utilizing the Logarithmic Mean Temperature Difference (LMTD) method:
+Q_reject = U · A · ΔT_LMTD
+
+Where:
+- U is the Overall Heat Transfer Coefficient, combining fluid-side and air-side convective boundary layers.
+- A is the total effective surface area of the radiator fins and tubes.
+- ΔT_LMTD is the Logarithmic Mean Temperature Difference.`
+            },
+            {
+                title: '3.2 Underhood Thermal Simulation & Wind Tunnel Validation',
+                content: `To bridge the gap between virtual concepts and real-world hardware, I deployed a hybrid validation pipeline combining 1D system modeling, 3D CFD, and aerodynamic wind tunnel testing.
+
+- 1D Thermal Modeling: I tuned transient vehicle thermal models in GT-Suite to size cooling components and optimize coolant flow distributions across various engine operating maps.
+- 3D CFD Underhood Analysis: I executed 3D Computational Fluid Dynamics (CFD) simulations to analyze velocity vectors and temperature profiles in the engine bay. This analysis allowed us to pinpoint recirculation zones—areas where hot exhaust air was drawn back into the radiator—and design targeted deflectors and heat shields to isolate temperature-sensitive electronics.
+- Wind Tunnel and Field Trials: I led physical validation trials, preparing high-density thermocouple grids and hot-wire anemometer rigs on prototype vehicles. Dictating test cases inside aerodynamic wind tunnels, I gathered real-time thermal telemetry logs. This data allowed us to calibrate our virtual CFD boundary conditions, achieving a closed-loop correlation within a tight error margin.`
+            },
+            {
+                title: '3.3 Functional Safety (ISO 26262), Quality Gateways & VP0/VP1 Milestones',
+                content: `Automotive production requires strict adherence to quality and safety standards. Throughout the product development lifecycle, I managed deliverables across the APQP framework, driving Design Failure Mode and Effects Analysis (DFMEA) workshops and PPAP documentation.
+
+ISO 26262 Functional Safety:
+I owned the functional safety engineering safety case for the Accelerator Pedal Module. This critical system was designed and validated in compliance with ISO 26262 functional safety requirements, achieving ASIL-C safety goal sign-off.
+- HARA (Hazard Analysis and Risk Assessment): Analyzed vehicle-level hazards (e.g., unintended acceleration) to define safety goals and safe states.
+- DFMEA & Mechanical Integrity: Led design reviews focusing on sensor redundancy (dual-sensor pedal designs) and structural integrity of the pedal arm (injection-molded polymer analysis) to prevent structural failures.
+
+VP0/VP1 Prototype Issue Resolution:
+During the initial VP0 (Validation Prototype 0) vehicle build, we encountered numerous clearance, static packaging, and hose kinking issues. I structured a systematic 8D (Eight Disciplines) problem-solving pipeline to investigate and resolve these assembly issues. By analyzing hose bend radii and dynamic engine movements, we modified mounting bracket geometries to prevent material fatigue. I resolved over 15 high-priority design bottlenecks before the VP1 build, ensuring the program cleared its quality gateways on time. For this achievement, I was awarded the title of VP0 Build Issue Resolution Champion.`
+            },
+            {
+                title: '3.4 EV Cooling & Active Thermal Management Integration',
+                content: `As Mahindra expanded its footprint into electric mobility, I contributed to the design and development of thermal systems for Electric Vehicle (EV) powertrains.
+
+- EV Component Sizing: Performed 1D sizing calculations for Low-Temperature Radiators (LTR) to cool electrical powertrains (inverters and traction motors) and manage battery pack temperature envelopes.
+- 5-Way Electric Coolant Valve Integration: I defined the system specifications for a 5-way rotary electric coolant valve. This valve dynamically routes coolant in serial, parallel, or bypass configurations, enabling active battery heating/cooling and recovery of e-motor waste heat to improve cabin HVAC efficiency.
+- CAN/LIN Integration: Co-engineered the communication interface between temperature sensors, the thermal controller, and the Battery Management System (BMS) over CAN and LIN buses.
+- DTC Definition: Documented Diagnostic Trouble Codes (DTCs) and OBD requirements for thermal actuator faults, ensuring safety compliance in electric drivetrains.`
+            }
+        ]
+    },
+    {
+        id: 'log_04',
+        title: 'EV Range & Powerflow Algorithms',
+        subtitle: 'LOG_04 // COGNIZANT GP // MBSE & PATENTED ESTIMATION ALGORITHMS',
+        date: '2023–Present',
+        system: 'EV CONTROLS',
+        specs: [
+            { label: 'PLATFORM REACH', value: 'NA & EU PROGRAMS', status: 'STLA_BRAIN' },
+            { label: 'ALGORITHM DESIGN', value: 'SOCR & RANGE ESTIMATOR', status: 'EURO_7_COMPLIANT' },
+            { label: 'PATENT FILED', value: 'INVENTION RECORD (IDR)', status: 'LOW_FLUCTUATION' },
+            { label: 'SYSML ENGINE', value: 'RHAPSODY / CAMEO', status: 'MBSE_TRACEABLE' }
+        ],
+        overview: 'Feature owner for EV Range and Powerflow estimation algorithms at Stellantis, designing low-fluctuation predictive range filters, deploying SysML-based MBSE architectures, and integrating ADAS torque requests.',
+        sections: [
+            {
+                title: '4.1 Enterprise Systems Engineering & Model-Based Systems Engineering (MBSE)',
+                content: `Joining Cognizant as a Senior Systems Consultant, I was embedded in a dedicated profile supporting Stellantis' global vehicle programs (covering North American and European platforms). In this role, I served as the Systems Engineer / Feature Owner for EV Range and Powerflow, managing system-level requirements and E/E architecture integration from early concepts to production.
+
+Requirements Engineering & ASPICE Compliance:
+I authored high-integrity system and feature specification packages in IBM Rational DOORS / DOORS Next Gen. All requirements engineering and verification activities were conducted in strict compliance with ASPICE (Automotive SPICE) guidelines, specifically adhering to the SYS.1 to SYS.5 (System Engineering) and SWE.1 to SWE.6 (Software Engineering) process models. By establishing rigorous bi-directional traceability matrices, I linked high-level stakeholder requests down to system specifications, software architecture elements, Simulink models, and physical verification test cases, guaranteeing maximum compliance throughout the V-Cycle.
+
+Model-Based Systems Engineering (MBSE) & AUTOSAR Integration:
+To manage the complexity of modern software-defined vehicles, I deployed MBSE methodologies inside the design pipeline:
+- SysML Architecture Modeling: Designed functional architectures and interface contracts in IBM Rational Rhapsody and CATIA Magic (Cameo Systems Modeler).
+- Interface Design & ASW-BSW Mapping: Created Block Definition Diagrams (BDD) and Internal Block Diagrams (IBD) to define port configurations and signal flows between the powertrain control module, battery management system, and cabin HMI. Leveraging my knowledge of Classic and Adaptive AUTOSAR standards, I mapped Application Software (ASW) runnables to Basic Software (BSW) services, defining Software Component (SWC) descriptions, Run-Time Environment (RTE) events, and diagnostic service mappings.
+- Control Function Prototyping: Translated functional SysML models into executable control algorithms within MATLAB/Simulink to simulate behavior prior to target ECU compilation.`
+            },
+            {
+                title: '4.2 Advanced Range Estimation Algorithms & IDR Innovation',
+                content: `The core of my engineering responsibility at Stellantis is the development and validation of the EV Range Estimation (Distance-to-Empty) algorithm.
+
+Physics of Range Estimation:
+The range estimation algorithm dynamically predicts the remaining driving distance based on battery state and current driving conditions:
+Range = (E_battery × SOC × η_powertrain) / EC_dynamic
+
+Where:
+- E_battery is the total battery pack energy capacity (kWh).
+- SOC is the State of Charge (%).
+- η_powertrain is the dynamic powertrain efficiency (electrical to mechanical).
+- EC_dynamic is the filtered dynamic energy consumption rate (Wh/km).
+
+The IDR Innovation:
+Standard range estimation algorithms suffer from significant fluctuations, causing driver anxiety. To solve this, I designed a predictive filtering algorithm and filed an Invention Disclosure Record (IDR).
+
+The patented algorithm integrates:
+1. Dynamic Range Mapping: Adjusting calculations in real time based on historical driving styles.
+2. EV Routing Integration: Communicating with navigation systems to incorporate upcoming route gradients, speed limits, and traffic conditions into the energy model.
+3. Range Impact Calculations: Determining the real-time energy drain of auxiliary systems (like cabin heating, seat heaters, and battery cooling) to calculate their impact on battery capacity.
+
+This system stabilizes the range estimation, filtering out transient spikes to deliver a smooth and predictable display on the driver's screen.`
+            },
+            {
+                title: '4.3 Powerflow Systems Feature Owner — Energy Calculations & HMI',
+                content: `As the Systems Feature Owner for the EV Powerflow visualization feature, I was responsible for the end-to-end systems definition, requirements engineering, and interface design. I defined the mathematical framework, signal routing paths, and HMI display requirements for real-time power balance calculations, helping drivers optimize energy consumption via the dashboard's real-time Powerflow Visualization.
+
+Power Balance Equation:
+The algorithm calculates the instantaneous power balance across the vehicle:
+P_battery = P_motor + P_engine + P_grey - P_regen
+
+Where:
+- P_battery is the net battery electrical power.
+- P_motor is the electrical power consumed by the traction motors.
+- P_engine is the generator/ICE power output (for hybrid configurations).
+- P_grey represents Grey Power—the sum of all low-voltage and auxiliary power drains (HVAC compressor, cabin heaters, electric power steering, DCDC converter, and coolant pumps).
+- P_regen is the electrical power recovered through regenerative braking.
+
+Signal Filtering and Euro 7 Compliance:
+The raw electrical power signals from vehicle sensors are highly noisy due to transient current swings. I developed digital low-pass and Kalman filters to smooth the signals before they are rendered on the HMI.
+
+Additionally, I supported development of the State of Certified Range (SOCR) algorithm, a new requirement under Euro 7 regulations. The SOCR monitors and records battery capacity degradation over time to ensure compliance with lifetime range guarantees.`
+            },
+            {
+                title: '4.4 Drive Mode Management, Vehicle Securement, & ADAS Torque Integration',
+                content: `A key systems integration challenge was aligning driver assistance features, securement states, and drive mode selections with powertrain torque requests.
+
+- Drive Mode Management: I engineered the system requirements and control logic for the vehicle's Drive Mode Management system. This involved designing the dynamic torque mapping and mode transition logic across multiple driver-selectable modes (such as Eco, Sport, Comfort, and All-Terrain configurations). Sized and calibrated torque request envelopes to optimize responsiveness and energy efficiency dynamically based on battery SOC, thermal boundaries, and axle telemetry.
+- Vehicle Securement: Led safety logic and software interlocks for the Vehicle Securement systems. Authored requirements for rollaway prevention, automatic Electronic Parking Brake (EPB) engagement/release, and secure vehicle state machines (managing automatic transitions to safe-park states when door status, seatbelt, or key-off events indicated the driver left the vehicle).
+- Functional Safety (ISO 26262) & ASIL-D Calibration: Owned and validated critical safety goals for torque management and securement systems. Under the ISO 26262 functional safety standard, these control paths carried safety goals rated up to ASIL-D. Participated in Hazard Analysis and Risk Assessment (HARA), drafted Functional and Technical Safety Requirements (FSR/TSR), and designed safety mechanisms like torque-neutral safe states.
+- ADAS Requirements & Torque Interface: Authored system-level requirements, functional safety specifications, and interface control documents (ICDs) for ADAS functions (such as Adaptive Cruise Control and Active Emergency Braking) and their torque arbitration logic with the propulsion controller's Base Torque Management module, ensuring safety-critical requirements were defined for smooth torque transitions.
+- Network Communication Protocols (C-CAN to CAN FD): Managed network signal mapping and interface configurations, coordinating the system-level vehicle network transition from legacy C-CAN to high-speed CAN FD communications, as well as routing parameters over LIN and Automotive Ethernet.
+- Controls & Calibration Support (HIL Testing): Supported controls development and calibration engineering teams by executing Hardware-in-the-Loop (HIL) validation testing, utilizing Vector CANoe and ETAS INCA to trace vehicle network signals, debug interfaces, and verify calibration parameter datasets against systems requirements.
+- Stellantis Architectures: Deployed and validated these systems across Stellantis' next-generation electrical and physical architectures: STLA Brain, STLA Large, STLA Frame, Atlantis High, and Atlantis Mid.`
+            },
+            {
+                title: '4.5 Engineering Innovations & Development Tooling',
+                content: `To fast-track E/E systems engineering and requirements verification cycles across global platforms, I developed several custom internal software utilities and engineering innovations:
+
+1. AI Requirements Classifier (INCOSE Guidelines): An intelligent semantic parser using LLMs to automatically classify, syntax-check, and audit system requirements in DOORS according to INCOSE (International Council on Systems Engineering) rules, accelerating requirements quality reviews.
+2. Advanced DBC Visualizer: A specialized diagnostic and mapping interface tool that decodes CAN/CAN FD database files (DBC) and visualizes multiplexed signals, bus layouts, and PDU configurations to simplify port definitions.
+3. CFTS Macrovariant Development Tool: A scripting framework that automates the generation and configuration of Component Functional Technical Specification (CFTS) macro-variants, reducing manual parameter mapping errors.
+4. Advanced Signal Data Analysis Tool: A Python-based processing engine to automate post-processing of HIL and road test telemetry logs, automatically aligning sensor streams and identifying signal anomalies.`
+            }
+        ]
     }
 ];
 

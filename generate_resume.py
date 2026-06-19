@@ -87,12 +87,13 @@ add_section_heading('Professional Summary')
 summary = doc.add_paragraph()
 summary.paragraph_format.space_after = Pt(6)
 run = summary.add_run(
-    'Embedded systems engineer with 6+ years of experience spanning ICE powertrains, HV battery integration, '
-    'and electrified platforms across 3 OEMs and 5+ vehicle platforms. Now specializing in solutions architecture '
-    'for automotive E/E systems — bridging mechanical design, embedded software, and system-level requirements. '
-    'Deep expertise in AUTOSAR, ISO 26262 functional safety, model-based systems engineering (MBSE/SysML), '
-    'and production-grade requirements management with DOORS Next Gen. Proven track record of leading '
-    'cross-functional teams from concept through production release.'
+    'Systems & E/E Engineer with over 6 years of experience bridging physical mechanical development, design '
+    'thinking, and high-voltage EV systems feature ownership. Proven track record in orchestrating the V-cycle '
+    'lifecycle for EV Propulsion Range and Powerflow systems on next-gen STLA architectures, leveraging MBSE '
+    '(SysML) and IBM DOORS Next Gen. Strong foundation in powertrain cooling, mechanical packaging (CATIA V5), '
+    'and thermal CFD modeling for commercial ICE and electrified platforms. Adept at applying design thinking '
+    'principles—such as Pugh decision analysis, 8D root-cause resolution, and cross-functional APQP quality gateways—to '
+    'optimize packaging boundaries and E/E configurations from concept to production-grade validation.'
 )
 run.font.size = Pt(10)
 
@@ -104,14 +105,12 @@ add_section_heading('Core Competencies')
 competencies = doc.add_paragraph()
 competencies.paragraph_format.space_after = Pt(6)
 run = competencies.add_run(
-    'AUTOSAR Classic & Adaptive  •  ISO 26262 Functional Safety  •  ASPICE  •  MBSE / SysML  •  '
-    'CAN / CAN-FD / LIN / FlexRay  •  Automotive Ethernet  •  UDS / DoIP  •  XCP / A2L  •  '
-    'Vector CANoe  •  ETAS INCA  •  MATLAB / Simulink  •  dSPACE HIL  •  DOORS Next Gen  •  '
-    'IBM Rhapsody  •  Embedded C  •  C++ (MISRA)  •  Python  •  FreeRTOS  •  Embedded Linux (Yocto)  •  '
-    'SolidWorks  •  CATIA  •  Creo  •  ANSYS  •  GT-Suite  •  Git / Jenkins CI  •  '
-    'LLM Integration  •  Agentic AI  •  LangChain / RAG  •  V-Model  •  PPAP  •  DFMEA  •  APQP'
+    'Systems Engineering (V-Model, ASPICE, MBSE/SysML)  •  EV Powertrain & Battery Integration  •  '
+    'Vehicle Networks (CAN, CAN FD, LIN, Ethernet)  •  Functional Safety (ISO 26262 ASIL-C/D)  •  '
+    'Powertrain Cooling & Active Thermal Management  •  Requirements Engineering (IBM DOORS Next Gen)  •  '
+    'HIL Testing & Calibration (Vector CANoe, ETAS INCA)  •  CAD Packaging & PLM (CATIA V5, Siemens Teamcenter)'
 )
-run.font.size = Pt(9.5)
+run.font.size = Pt(10)
 run.font.color.rgb = RGBColor(0x33, 0x33, 0x33)
 
 
@@ -123,16 +122,20 @@ add_section_heading('Professional Experience')
 experiences = [
     {
         'company': 'Cognizant (Client: Stellantis)',
-        'title': 'Feature Owner — Range & Powerflow Systems',
+        'title': 'Systems Engineer / Feature Owner — EV Range & Powerflow',
         'period': '2024 – Present',
         'location': 'Pune, India',
         'bullets': [
-            'Feature owner for Range Estimation and Powerflow management — end-to-end ownership from requirements through validation.',
-            'Authoring, reviewing, and releasing system requirements using DOORS Next Gen; maintaining full traceability from stakeholder needs to system specs.',
-            'Led a process improvement initiative to develop an internal DOORS NXG alternative, streamlining requirements management workflows across teams.',
-            'Performing requirements validation and calibration through ETAS INCA — verifying system behavior against specification on HIL and vehicle.',
-            'Creating and maintaining system architecture models in IBM Rhapsody using SysML — defining block definitions, activity diagrams, and interface contracts.',
-            'Driving cross-functional issue resolution across powertrain controls, calibration, and integration teams for production release milestones.',
+            'Systems Engineer / Feature Owner for EV Propulsion Range Estimation, managing system-level requirements and E/E architecture integration across global STLA architectures (STLA Brain, Large, Frame) and Atlantis High/Mid platforms.',
+            'Authored system requirements for the Distance-to-Empty (DTE) range algorithm in IBM DOORS Next Gen, specifying functional logic for dynamic energy models, State of Charge (SOC) tracking, and signal filtering.',
+            'Acted as Systems Feature Owner for EV Powerflow HMI Visualizations; defined signal routing, system interfaces, and the mathematical framework for real-time power balance calculations, including auxiliary "Grey Power" losses.',
+            'Authored system requirements and interface specifications for ADAS functions (Adaptive Cruise Control, Active Emergency Braking) and their torque arbitration logic with the propulsion controller\'s Base Torque Management module.',
+            'Supported controls development (MATLAB/Simulink) and calibration teams by executing Hardware-in-the-Loop (HIL) checkout testing, debugging network interfaces via CANoe, and utilizing ETAS INCA for calibration parameters.',
+            'Owned ISO 26262 functional safety requirements up to ASIL-D for propulsion and vehicle securement paths; conducted HARA, established Functional/Technical Safety Concepts (FSC/TSR), and specified fail-safe torque-neutral requirements.',
+            'Ensured system-level compliance with ASPICE SYS.1-SYS.5 processes and defined AUTOSAR Software Component (SWC) interface mappings for ASW-BSW software integration.',
+            'Managed network signal mapping and interface configurations to coordinate the vehicle-level network transition from legacy C-CAN to high-speed CAN FD communications.',
+            'Developed engineering innovations to fast-track development: an AI tool to classify requirements per INCOSE guidelines, an Advanced DBC Visualizer, a Macrovariant Development tool for CFTS, and an Advanced Signal Data Analysis tool.',
+            'Deployed Model-Based Systems Engineering (MBSE) using SysML in IBM Rational Rhapsody and CATIA Magic to model functional architectures, port configurations, and interface contracts.',
         ]
     },
     {
@@ -141,11 +144,13 @@ experiences = [
         'period': '2023 – 2024',
         'location': 'Pune, India',
         'bullets': [
-            'Owned end-to-end thermal management architecture: 1D/3D CFD for radiator, intercooler, and EGR cooler sizing; validated in wind tunnel with hands-on instrumentation and sensor rigs.',
-            'Conducted data acquisition and post-processing analysis; drove design improvements through iterative test-analyze-fix cycles with full documented signoffs.',
-            'Designed accelerator pedal module from concept to tooling completion — including technology selection, mechanical packaging design, and ASIL C functional safety signoffs.',
-            'Followed OEM product development practices: PPAP, DFMEA, quality gateway reviews, and warranty signoff processes aligned with Mahindra\'s APQP framework.',
-            'Defined coolant circuit topology and fan control architecture with CAN-based speed modulation under varying duty cycles.',
+            'Primary Owner of commercial vehicle powertrain cooling and EV active thermal management systems; managed a team of 2 engineers through APQP quality gates and PPAP dossiers.',
+            'Sized radiator core and charge-air intercooler thermal envelopes based on Logarithmic Mean Temperature Difference (LMTD) and convective heat transfer equations and engine trials to maintain performance under 45°C ambient boundaries.',
+            'Leveraged CATIA V5 to model underhood packaging layouts, routing high-pressure lines and releasing production 2D drawings with strict GD&T and tolerance stack-up via Siemens Teamcenter PLM.',
+            'Conducted 1D GT-Suite transient system simulations and 3D CFD airflow modeling to eliminate underhood hot-air recirculation zones; validated scopes in wind tunnels using thermocouple and hot-wire anemometer rigs.',
+            'Designed and validated the ISO 26262 ASIL-C safety case for the Accelerator Pedal Module, executing HARA and DFMEA risk assessments from concept to tooling.',
+            'Defined system specs for a 5-way rotary electric coolant valve to enable serial, parallel, and waste-heat recovery cooling modes for battery and e-motor thermal loops.',
+            'Resolved 15+ clearance and packaging defects during the VP0 prototype build using 8D root-cause methodologies, earning the title of VP0 Build Issue Resolution Champion.',
         ]
     },
     {
@@ -154,10 +159,12 @@ experiences = [
         'period': '2019 – 2023',
         'location': 'Pune, India',
         'bullets': [
-            'Led complete powertrain design for 3D/E forklifts, simulating 50+ engine-transmission combinations for optimal performance.',
-            'Conducted comprehensive benchmarking and ROI analysis to propose cost-effective, high-performance powertrain architectures.',
-            'Validated systems on-site and prepared detailed engineering documentation, calculations, and interface specifications.',
-            'Collaborated on embedded integration: fleet management strategy, IoT connectivity modules, and thermal sensor selection.',
+            'Powertrain System Owner for a major forklift program, designing and integrating engine, powershift transmission, and drive/steer axles for a family of 1.5T to 3T forklifts across 70+ variants.',
+            'Created a predictive torque converter matching and tractive effort simulation model combining engine torque, converter torque ratio multipliers, and transmission and drive axle ratios, achieving a 2% mean error validated against GT-Suite and test track data.',
+            'Utilized weighted Pugh Decision Matrices to select engine-transmission combinations, balancing objective physics performance against cost, lead times, and supplier service networks.',
+            'Conducted 1D cooling simulations for radiator/oil cooler packages and sized mechanical/electric engine fans to minimize parasitic power draws.',
+            'Designed embedded safety features including fuel cut-off interlock solenoids, seatbelt/seat-switch driver presence detection, and calibrated electronic throttle/joystick potentiometer signals.',
+            'Co-engineered CAN bus (SAE J1939) fleet telematics configurations, mapping DTC diagnostic alerts and implementing store-and-forward flash memory buffering for cell-dead zones.',
         ]
     },
 ]
@@ -253,19 +260,14 @@ add_section_heading('Key Projects')
 
 projects = [
     {
-        'name': 'CAN Bus Analyser & Diagnostic Platform',
-        'tech': 'C++, Embedded C, CAN Protocol, UDS, DBC, Qt, Python',
-        'desc': 'Production-grade diagnostic tool for real-time CAN/CAN-FD bus monitoring, DBC-based signal decoding, and UDS diagnostic session management. Features HAL for multi-vendor CAN interfaces, pluggable protocol decoders, and real-time filtering engine.',
+        'name': 'AI-Powered Systems Engineering Platform (AISE)',
+        'tech': 'Python, LangChain, React, MBSE, SysML, RAG',
+        'desc': 'Intelligent systems engineering platform automating requirements decomposition and trace matrices using LLMs. Converts natural language requirements into SysML-compliant block definitions and interface contracts.',
     },
     {
-        'name': 'AI-Powered Systems Engineering Platform',
-        'tech': 'Python, LangChain, React, MBSE, SysML',
-        'desc': 'Intelligent platform automating requirements decomposition and system architecture generation using LLMs. Converts natural language requirements into SysML-compatible block diagrams and interface definitions.',
-    },
-    {
-        'name': 'Connected Mobility Platform',
-        'tech': 'React Native, Node.js, MQTT, Socket.io, REST API',
-        'desc': 'Full-stack connected vehicle application with real-time fleet telemetry, OTA update orchestration, and predictive maintenance alerts. Designed with SOA principles for scalable V2C communication.',
+        'name': 'F1 Telemetry & 3D Race Visualisation',
+        'tech': 'React, Three.js, Node.js, WebSockets, MQTT, Python',
+        'desc': 'A real-time telemetry streaming and interactive 3D visualization dashboard. Decodes live CAN and sensor streams over WebSockets to render vehicle kinetics, tire thermal zones, and track positioning in a high-performance WebGL-based 3D environment.',
     },
 ]
 
@@ -293,9 +295,9 @@ add_section_heading('Technical Skills')
 
 skills = [
     ('Protocols & Networks', 'CAN / CAN-FD, LIN, FlexRay, Automotive Ethernet, UDS / DoIP, XCP / A2L'),
-    ('Architecture & Standards', 'AUTOSAR Classic, AUTOSAR Adaptive, ISO 26262, ASPICE, V-Model, MBSE / SysML'),
-    ('Tools & Platforms', 'Vector CANoe, ETAS INCA, MATLAB / Simulink, dSPACE HIL, Git / Jenkins CI, DOORS Next Gen, IBM Rhapsody'),
-    ('CAD & Simulation', 'SolidWorks, CATIA, Creo, FreeCAD, ANSYS, GT-Suite'),
+    ('Architecture & Standards', 'AUTOSAR Classic & Adaptive (ASW-BSW), ISO 26262 (ASIL-C/D), ASPICE, V-Model, MBSE / SysML, 8D Problem Solving'),
+    ('Tools & Platforms', 'Vector CANoe, ETAS INCA, MATLAB / Simulink, dSPACE HIL, Git / Jenkins CI, DOORS Next Gen, IBM Rhapsody, CATIA Magic'),
+    ('CAD & Simulation & PLM', 'SolidWorks, CATIA V5, Creo, ANSYS, GT-Suite, Siemens Teamcenter PLM, GD&T'),
     ('Languages & Embedded', 'Embedded C, C++ (MISRA), Python, RTOS (FreeRTOS), Embedded Linux (Yocto)'),
     ('AI & Data', 'LLM Integration, Agentic AI Systems, LangChain / RAG, Data Analysis (Pandas), Prompt Engineering, ML Pipelines'),
 ]

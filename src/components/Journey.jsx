@@ -242,7 +242,7 @@ const Journey = () => {
             id: 3,
             name: "COGNIZANT GP",
             company: "Cognizant (Stellantis)",
-            role: "Feature Owner — Range & Powerflow",
+            role: "Systems Engineer / Feature Owner — Range & Powerflow",
             year: "Lap 3 • 2024–Present",
             compound: "SOFT",
             compoundColor: "#E10600",
@@ -258,45 +258,61 @@ const Journey = () => {
                     gear: "G8",
                     status: "DRS_ACTIVE",
                     bullets: [
-                        "Feature owner for Range Estimation algorithms, managing full block lifecycle requirements.",
-                        "Authoring system requirements packages within DOORS Next Gen with complete traceability loops.",
-                        "Driving cross-functional issue resolutions across powertrain control and vehicle integration teams."
+                        "Appointed Systems Feature Owner for EV Range and Powerflow, managing system-level requirements and E/E architecture.",
+                        "Authored dynamic Range Estimation requirements, specifying SOC tracking and dynamic energy models.",
+                        "Acted as Systems Feature Owner for EV Powerflow HMI visualizations, defining signal routing and interface specs."
                     ]
                 },
                 {
                     pct: 0.25,
                     name: "T2 BEACH STRAIGHT",
-                    activity: "DOORS Traceability Matrices",
+                    activity: "ADAS System Requirements",
                     speed: "328 km/h",
                     gear: "G8",
-                    status: "TRACEABILITY_OK",
+                    status: "SYS_REQ_OK",
                     bullets: [
-                        "Established requirement trace linking stakeholder requests to physical component specs.",
-                        "Automated traceability checks using scripting extensions to accelerate QA cycles by 30%."
+                        "Authored system requirements and interface specifications for ADAS functions (Adaptive Cruise Control, Active Emergency Braking).",
+                        "Specified torque arbitration requirements with the propulsion controller's Base Torque Management module.",
+                        "Established functional safety requirements up to ASIL-D in compliance with ISO 26262 standards."
                     ]
                 },
                 {
                     pct: 0.50,
                     name: "T3 TURNPIKE CHICANE",
-                    activity: "ETAS INCA HIL Calibrations",
+                    activity: "Controls & Calibration Support",
                     speed: "215 km/h",
                     gear: "G4",
-                    status: "CALIBRATION_OK",
+                    status: "SUPPORT_NOMINAL",
                     bullets: [
-                        "Executed calibration and validation checkouts on HIL rigs using ETAS INCA diagnostic tools.",
-                        "Monitored CAN/CAN-FD signals and resolved interface discrepancies before releasing production baselines."
+                        "Supported controls and calibration engineering teams by executing HIL validation checkouts on prototype code.",
+                        "Coordinated the system network interface transition from legacy C-CAN to high-speed CAN FD communications.",
+                        "Traced and debugged network interfaces using Vector CANoe and ETAS INCA diagnostic tools."
+                    ]
+                },
+                {
+                    pct: 0.72,
+                    name: "T4 INNOVATION CHICANE",
+                    activity: "E/E Development Innovations",
+                    speed: "280 km/h",
+                    gear: "G6",
+                    status: "INNOVATION_PASS",
+                    bullets: [
+                        "Created an AI-powered system requirements classifier in compliance with INCOSE guidelines.",
+                        "Built an Advanced DBC Visualizer and CFTS macrovariant scripting tool to fast-track systems layout configurations.",
+                        "Developed an advanced signal data analysis tool to automate log audits from HIL checkouts."
                     ]
                 },
                 {
                     pct: 0.95,
-                    name: "T4 TURN 17 HAIRPIN",
+                    name: "T5 TURN 17 HAIRPIN",
                     activity: "SysML Architecture & Modeling",
                     speed: "145 km/h",
                     gear: "G3",
                     status: "MODEL_COMMITTED",
                     bullets: [
                         "Built block definition (BDD) and interface contract models inside IBM Rhapsody using SysML.",
-                        "Defined port parameters and activity diagrams representing subsystem interactions."
+                        "Defined port parameters and activity diagrams representing subsystem interactions.",
+                        "Deployed Model-Based Systems Engineering (MBSE) methodologies as the primary design layout for STLA platforms."
                     ]
                 }
             ]
