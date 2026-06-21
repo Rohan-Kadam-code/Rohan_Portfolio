@@ -190,6 +190,7 @@ const TorqueConverter = () => {
   const [zoomedChart, setZoomedChart] = useState(null); // 'matching' | 'ratios' | null
   const [matchingHover, setMatchingHover] = useState(null); // { rpm, viewBoxX, tEngine, tConverters }
   const [ratiosHover, setRatiosHover] = useState(null); // { sr, viewBoxX, tr, eff }
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleMatchingMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -298,7 +299,7 @@ const TorqueConverter = () => {
     setSimLockupActive(false);
   };
 
-  // Sync simulation initial values on preset mount and add escape keydown listener
+  // Sync simulation initial values on preset mount, add escape keydown listener, and track window resize
   useEffect(() => {
     loadPreset('v8_muscle');
     
@@ -308,7 +309,15 @@ const TorqueConverter = () => {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   // Solve matching curves for static plotting
@@ -620,48 +629,52 @@ const TorqueConverter = () => {
               strokeWidth="1.5"
               strokeDasharray="4,4"
             />
-            <rect
-              x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 245 : matchingHover.viewBoxX + 15}
-              y={padding + 50}
-              width="230"
-              height="115"
-              fill="rgba(10,12,16,0.94)"
-              stroke="var(--color-primary)"
-              strokeWidth="1"
-              rx="2"
-            />
-            <text
-              x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 230 : matchingHover.viewBoxX + 30}
-              y={padding + 70}
-              fill="#fff"
-              fontSize="9.5"
-              fontFamily="var(--font-mono)"
-              fontWeight="bold"
-            >
-              RPM: {matchingHover.rpm} RPM
-            </text>
-            <text
-              x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 230 : matchingHover.viewBoxX + 30}
-              y={padding + 85}
-              fill="var(--color-primary)"
-              fontSize="9"
-              fontFamily="var(--font-mono)"
-            >
-              ENGINE TORQUE: {matchingHover.tEngine} Nm
-            </text>
-            {matchingHover.tConverters.map((c, i) => (
-              <text
-                key={i}
-                x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 230 : matchingHover.viewBoxX + 30}
-                y={padding + 100 + i * 13}
-                fill="var(--color-telemetry-blue)"
-                fontSize="8.5"
-                fontFamily="var(--font-mono)"
-                opacity={0.6 + i * 0.15}
-              >
-                Ti (SR={c.sr.toFixed(1)}): {c.torque} Nm
-              </text>
-            ))}
+            {!isMobile && (
+              <g>
+                <rect
+                  x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 245 : matchingHover.viewBoxX + 15}
+                  y={padding + 50}
+                  width="230"
+                  height="115"
+                  fill="rgba(10,12,16,0.94)"
+                  stroke="var(--color-primary)"
+                  strokeWidth="1"
+                  rx="2"
+                />
+                <text
+                  x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 230 : matchingHover.viewBoxX + 30}
+                  y={padding + 70}
+                  fill="#fff"
+                  fontSize="9.5"
+                  fontFamily="var(--font-mono)"
+                  fontWeight="bold"
+                >
+                  RPM: {matchingHover.rpm} RPM
+                </text>
+                <text
+                  x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 230 : matchingHover.viewBoxX + 30}
+                  y={padding + 85}
+                  fill="var(--color-primary)"
+                  fontSize="9"
+                  fontFamily="var(--font-mono)"
+                >
+                  ENGINE TORQUE: {matchingHover.tEngine} Nm
+                </text>
+                {matchingHover.tConverters.map((c, i) => (
+                  <text
+                    key={i}
+                    x={matchingHover.viewBoxX + 15 + 230 > svgWidth - padding ? matchingHover.viewBoxX - 230 : matchingHover.viewBoxX + 30}
+                    y={padding + 100 + i * 13}
+                    fill="var(--color-telemetry-blue)"
+                    fontSize="8.5"
+                    fontFamily="var(--font-mono)"
+                    opacity={0.6 + i * 0.15}
+                  >
+                    Ti (SR={c.sr.toFixed(1)}): {c.torque} Nm
+                  </text>
+                ))}
+              </g>
+            )}
           </g>
         )}
       </svg>
@@ -763,44 +776,48 @@ const TorqueConverter = () => {
               strokeWidth="1.5"
               strokeDasharray="4,4"
             />
-            <rect
-              x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 195 : ratiosHover.viewBoxX + 15}
-              y={padding + 50}
-              width="180"
-              height="75"
-              fill="rgba(10,12,16,0.94)"
-              stroke="var(--color-secondary)"
-              strokeWidth="1"
-              rx="2"
-            />
-            <text
-              x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 180 : ratiosHover.viewBoxX + 30}
-              y={padding + 70}
-              fill="#fff"
-              fontSize="9.5"
-              fontFamily="var(--font-mono)"
-              fontWeight="bold"
-            >
-              SPEED RATIO: {ratiosHover.sr.toFixed(3)}
-            </text>
-            <text
-              x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 180 : ratiosHover.viewBoxX + 30}
-              y={padding + 85}
-              fill="var(--color-secondary)"
-              fontSize="9"
-              fontFamily="var(--font-mono)"
-            >
-              TORQUE RATIO: {ratiosHover.tr.toFixed(2)}x
-            </text>
-            <text
-              x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 180 : ratiosHover.viewBoxX + 30}
-              y={padding + 100}
-              fill="var(--color-telemetry-blue)"
-              fontSize="9"
-              fontFamily="var(--font-mono)"
-            >
-              EFFICIENCY: {(ratiosHover.eff * 100).toFixed(1)}%
-            </text>
+            {!isMobile && (
+              <g>
+                <rect
+                  x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 195 : ratiosHover.viewBoxX + 15}
+                  y={padding + 50}
+                  width="180"
+                  height="75"
+                  fill="rgba(10,12,16,0.94)"
+                  stroke="var(--color-secondary)"
+                  strokeWidth="1"
+                  rx="2"
+                />
+                <text
+                  x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 180 : ratiosHover.viewBoxX + 30}
+                  y={padding + 70}
+                  fill="#fff"
+                  fontSize="9.5"
+                  fontFamily="var(--font-mono)"
+                  fontWeight="bold"
+                >
+                  SPEED RATIO: {ratiosHover.sr.toFixed(3)}
+                </text>
+                <text
+                  x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 180 : ratiosHover.viewBoxX + 30}
+                  y={padding + 85}
+                  fill="var(--color-secondary)"
+                  fontSize="9"
+                  fontFamily="var(--font-mono)"
+                >
+                  TORQUE RATIO: {ratiosHover.tr.toFixed(2)}x
+                </text>
+                <text
+                  x={ratiosHover.viewBoxX + 15 + 180 > svgWidth - padding ? ratiosHover.viewBoxX - 180 : ratiosHover.viewBoxX + 30}
+                  y={padding + 100}
+                  fill="var(--color-telemetry-blue)"
+                  fontSize="9"
+                  fontFamily="var(--font-mono)"
+                >
+                  EFFICIENCY: {(ratiosHover.eff * 100).toFixed(1)}%
+                </text>
+              </g>
+            )}
           </g>
         )}
       </svg>
@@ -889,17 +906,17 @@ const TorqueConverter = () => {
         {/* Preset Selector Banner */}
         <div style={{
           background: 'var(--color-surface)',
-          padding: '20px',
+          padding: isMobile ? '12px' : '20px',
           borderRadius: '4px',
           border: '1px solid rgba(255, 255, 255, 0.04)',
           marginBottom: '30px',
           display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          gap: '20px',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: isMobile ? 'flex-start' : 'center',
+          gap: isMobile ? '10px' : '20px',
         }}>
           <span className="f1-mono-text" style={{ fontSize: '0.85rem', color: 'var(--color-secondary)' }}>SELECT COMBINED PRESET:</span>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {Object.keys(ENGINE_PRESETS).map(key => (
               <button
                 key={key}
@@ -908,9 +925,9 @@ const TorqueConverter = () => {
                   background: selectedPresetKey === key ? 'var(--color-primary)' : 'rgba(255,255,255,0.02)',
                   border: `1px solid ${selectedPresetKey === key ? 'var(--color-primary)' : 'rgba(255,255,255,0.08)'}`,
                   color: '#fff',
-                  padding: '8px 18px',
+                  padding: isMobile ? '6px 12px' : '8px 18px',
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.75rem',
+                  fontSize: isMobile ? '0.7rem' : '0.75rem',
                   fontWeight: 'bold',
                   textTransform: 'uppercase',
                   cursor: 'pointer',
@@ -925,7 +942,7 @@ const TorqueConverter = () => {
         </div>
 
         {/* Main Dashboard Workspace Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '30px', alignItems: 'start' }} className="journal-dashboard">
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 380px', gap: '20px', alignItems: 'start' }} className="journal-dashboard">
           
           {/* Left Block: Config Editors or Simulation Dashboard */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
@@ -939,15 +956,15 @@ const TorqueConverter = () => {
                   border: 'none',
                   borderBottom: activeTab === 'telemetry' ? '3px solid var(--color-primary)' : '3px solid transparent',
                   color: activeTab === 'telemetry' ? '#fff' : 'var(--color-text-muted)',
-                  padding: '12px 25px',
+                  padding: isMobile ? '8px 12px' : '12px 25px',
                   fontFamily: 'var(--font-display)',
-                  fontSize: '0.85rem',
+                  fontSize: isMobile ? '0.7rem' : '0.85rem',
                   fontWeight: 'bold',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                 }}
               >
-                MATHEMATICAL TELEMETRY CHARTS
+                {isMobile ? 'TELEMETRY' : 'MATHEMATICAL TELEMETRY CHARTS'}
               </button>
               <button
                 onClick={() => setActiveTab('simulation')}
@@ -956,22 +973,22 @@ const TorqueConverter = () => {
                   border: 'none',
                   borderBottom: activeTab === 'simulation' ? '3px solid var(--color-primary)' : '3px solid transparent',
                   color: activeTab === 'simulation' ? '#fff' : 'var(--color-text-muted)',
-                  padding: '12px 25px',
+                  padding: isMobile ? '8px 12px' : '12px 25px',
                   fontFamily: 'var(--font-display)',
-                  fontSize: '0.85rem',
+                  fontSize: isMobile ? '0.7rem' : '0.85rem',
                   fontWeight: 'bold',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                 }}
               >
-                REAL-TIME DRIVETRAIN SIMULATOR
+                {isMobile ? 'SIMULATOR' : 'REAL-TIME DRIVETRAIN SIMULATOR'}
               </button>
             </div>
 
             {/* TAB 1: TELEMETRY CHARTS */}
             {activeTab === 'telemetry' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }} className="journal-dashboard">
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }} className="journal-dashboard">
                   {/* Chart 1: Matching Points */}
                   <div
                     className="f1-card"
@@ -982,9 +999,28 @@ const TorqueConverter = () => {
                       <span>TELEMETRY_STREAM // COUPLING MATCH POINTS</span>
                       <span style={{ color: 'var(--color-secondary)', fontSize: '0.7rem' }}>[🔎 CLICK TO ZOOM]</span>
                     </div>
-                    <div style={{ height: '310px' }} onClick={(e) => e.stopPropagation()}>
+                    <div style={{ height: isMobile ? '240px' : '310px' }} onClick={(e) => e.stopPropagation()}>
                       {renderMatchingChart()}
                     </div>
+                    {isMobile && matchingHover && (
+                      <div style={{
+                        marginTop: '10px',
+                        background: '#0e1014',
+                        padding: '10px',
+                        borderRadius: '2px',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.75rem',
+                        borderLeft: '2px solid var(--color-primary)'
+                      }}>
+                        <div style={{ color: '#fff', fontWeight: 'bold', marginBottom: '4px' }}>TELEMETRY AT {matchingHover.rpm} RPM:</div>
+                        <div>Engine Torque: <span style={{ color: 'var(--color-primary)' }}>{matchingHover.tEngine} Nm</span></div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', marginTop: '4px', fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>
+                          {matchingHover.tConverters.map((c, i) => (
+                            <div key={i}>SR {c.sr.toFixed(1)}: {c.torque} Nm</div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '10px', lineHeight: 1.4 }}>
                       Plots the Engine Torque output against the converter impeller torque absorption (Ti) for different Speed Ratios (SR). The intersection points show where the engine will stabilize at steady state for that speed ratio.
                     </p>
@@ -1000,9 +1036,24 @@ const TorqueConverter = () => {
                       <span>TELEMETRY_STREAM // RATIO & EFFICIENCY CURVES</span>
                       <span style={{ color: 'var(--color-secondary)', fontSize: '0.7rem' }}>[🔎 CLICK TO ZOOM]</span>
                     </div>
-                    <div style={{ height: '310px' }} onClick={(e) => e.stopPropagation()}>
+                    <div style={{ height: isMobile ? '240px' : '310px' }} onClick={(e) => e.stopPropagation()}>
                       {renderRatiosChart()}
                     </div>
+                    {isMobile && ratiosHover && (
+                      <div style={{
+                        marginTop: '10px',
+                        background: '#0e1014',
+                        padding: '10px',
+                        borderRadius: '2px',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.75rem',
+                        borderLeft: '2px solid var(--color-secondary)'
+                      }}>
+                        <div style={{ color: '#fff', fontWeight: 'bold', marginBottom: '4px' }}>TELEMETRY AT SR {ratiosHover.sr.toFixed(3)}:</div>
+                        <div>Torque Ratio: <span style={{ color: 'var(--color-secondary)' }}>{ratiosHover.tr.toFixed(2)}x</span></div>
+                        <div>Efficiency: <span style={{ color: 'var(--color-telemetry-blue)' }}>{(ratiosHover.eff * 100).toFixed(1)}%</span></div>
+                      </div>
+                    )}
                     <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '10px', lineHeight: 1.4 }}>
                       Shows the Torque Ratio (TR) multiplication factor and hydrodynamic coupling efficiency vs. Speed Ratio (SR). High stall torque multiplication degrades to 1.0 (coupling point) as turbine speed approaches impeller speed.
                     </p>
@@ -1010,7 +1061,7 @@ const TorqueConverter = () => {
                 </div>
 
                 {/* Engine Curve Editor & Converter Details Table */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }} className="journal-dashboard">
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }} className="journal-dashboard">
                   
                   {/* Engine Points Editor */}
                   <div style={{ background: 'var(--color-surface)', border: '1px solid rgba(255,255,255,0.04)', padding: '25px', borderRadius: '4px' }}>
@@ -1182,7 +1233,7 @@ const TorqueConverter = () => {
                   {renderShiftLights()}
 
                   {/* Dynamic cluster dials */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '15px', marginBottom: '25px' }} className="journal-dashboard">
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: isMobile ? '10px' : '15px', marginBottom: '25px' }} className="journal-dashboard">
                     
                     <div style={{ background: '#0e1014', borderLeft: '3px solid var(--color-primary)', padding: '12px 15px', borderRadius: '2px' }}>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--color-text-muted)', display: 'block', textTransform: 'uppercase' }}>ENGINE SPEED</span>
@@ -1212,7 +1263,7 @@ const TorqueConverter = () => {
                   </div>
 
                   {/* Simulator Controls & Pedals */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '20px' }} className="journal-dashboard">
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '15px' : '30px', marginBottom: '20px' }} className="journal-dashboard">
                     
                     {/* Throttle (Gas Pedal) */}
                     <div>
@@ -1260,7 +1311,7 @@ const TorqueConverter = () => {
                   </div>
 
                   {/* Gearbox & Launch Configuration */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '35px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }} className="journal-dashboard">
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '20px' : '35px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }} className="journal-dashboard">
                     
                     {/* Shift Controls */}
                     <div>
@@ -1383,7 +1434,7 @@ const TorqueConverter = () => {
                     LIVE SYSTEM POWER DIAGNOSTICS
                   </h3>
                   
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '10px' : '20px', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', padding: '5px 0' }}>
                         <span>ENGINE TORQUE OUTPUT:</span>
@@ -1515,8 +1566,8 @@ const TorqueConverter = () => {
               background: 'var(--color-surface)',
               border: '1px solid rgba(255, 255, 255, 0.08)',
               borderRadius: '4px',
-              padding: '25px',
-              width: '90%',
+              padding: isMobile ? '15px' : '25px',
+              width: '95%',
               maxWidth: '850px',
               position: 'relative',
               boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5)',
@@ -1547,7 +1598,7 @@ const TorqueConverter = () => {
                 <span style={{ transform: 'skewX(10deg)', display: 'block' }}>CLOSE [ESC]</span>
               </button>
             </div>
-            <div style={{ width: '100%', height: '500px', background: '#08090b', borderRadius: '4px', padding: '10px' }}>
+            <div style={{ width: '100%', height: isMobile ? '240px' : '500px', background: '#08090b', borderRadius: '4px', padding: '10px' }}>
               {zoomedChart === 'matching' ? renderMatchingChart() : renderRatiosChart()}
             </div>
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
